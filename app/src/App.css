@@ -1,3 +1,8 @@
+body {
+  font-family: "Poppins";
+  background-color: gainsboro !important;
+}
+
 .App {
   text-align: center;
 }

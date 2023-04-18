@@ -9,13 +9,20 @@ class Home extends Component {
 
     render() { 
         return (
-            <div>
+          <div>
              <AppNav/>
-             <h2 style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '100vh'}}>
-               Welcome to easy expense app !
-               </h2>
+            <div class="container-fluid">
+              <div class="d-flex flex-column align-items-center justify-content-center">
+                <form class="d-flex flex-column align-items-center justify-content-center mt-5 shadow rounded w-25 bg-white">
+                  <h2 class="text-center mb-5 mt-4">INICIAR SESIÓN</h2>
+                  <input class="form-control w-75 mb-4" type="text" placeholder="Escribe tu usuario..." />
+                  <input class="form-control w-75 mb-5" type="password" placeholder="Escribe tu contraseña..." />
+                  <button class="btn btn-success w-50 mb-3">INICIAR SESIÓN</button>
+                </form>
               </div>
-            );
+            </div>
+          </div>
+        );
     }
 }
  
