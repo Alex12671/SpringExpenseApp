@@ -1,2 +1,2 @@
-# ExpenseApp
-Use "npm install" command to install the node_modules for the React project.
+# Prueba de readme
+Solo me hace gracia ver como se ve esto xd
