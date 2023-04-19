@@ -1,6 +1,8 @@
 package com.example.codeengine.expense.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -15,11 +17,16 @@ import lombok.NoArgsConstructor;
 public class User {
 
 	@Id
-	private String id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
 	
-	private String  name;
+	private String name;
+
+	private String password;
 	
 	private String email;
+
+	private String role;
 
 }
 

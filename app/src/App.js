@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route, BrowserRouter as Router,Switch} from 'react-router-dom'
 import Category from './Category';
-import Home from './Home';
+import Login from './Login';
 import Expenses from './Expenses';
 import ModifyExpense from './ModifyExpense';
 import ExpensesList from './ExpensesList';
@@ -13,7 +13,7 @@ class App extends Component {
         return ( 
             <Router>
                 <Switch>
-                     <Route path='/' exact={true} component={Home}/>
+                     <Route path='/' exact={true} component={Login}/>
                      <Route path='/categories' exact={true} component={Category}/>
                      <Route path='/addExpense' exact={true} component={Expenses}/>
                      <Route path='/expenses' exact={true} component={ExpensesList}/>

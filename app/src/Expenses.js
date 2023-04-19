@@ -7,17 +7,6 @@ import {Container,Input,Button,Label, FormGroup} from 'reactstrap';
 import {Link} from 'react-router-dom';
 
 class Expenses extends Component {
-
-  // {
-  //   "id": 100,
-  //   "expensedate": "2019-06-16T17:00:00Z",
-  //   "description": "New York Business Trip",
-  //   "location": "New York",
-  //   "category": {
-  //   "id": 1,
-  //   "name": "Travel"
-  //   }
-  //   },
  
     emptyItem = {
         id : '',
@@ -38,9 +27,9 @@ class Expenses extends Component {
         item : this.emptyItem
        }
 
-       this.handleSubmit= this.handleSubmit.bind(this);
-       this.handleChange= this.handleChange.bind(this);
-       this.handleDateChange= this.handleDateChange.bind(this);
+      this.handleSubmit= this.handleSubmit.bind(this);
+      this.handleChange= this.handleChange.bind(this);
+      this.handleDateChange= this.handleDateChange.bind(this);
 
     } 
 
@@ -149,18 +138,18 @@ class Expenses extends Component {
                 <Container>
                   <div class="d-flex flex-column align-items-center justify-content-center">
                       
-                      <form class="bg-white shadow rounded w-50 p-5" onSubmit={this.handleSubmit}>
+                      <form class="bg-white shadow rounded w-50 p-5" onSubmit={this.handleSubmit} >
                       {title}
                       <FormGroup>
                           <Label for="description">Título</Label>
                           <Input type="text" name="description" id="description" 
-                              onChange={this.handleChange} autoComplete="name"/>
-                      
+                              onChange={this.handleChange} autoComplete="name" required/>
                       </FormGroup>
 
                       <FormGroup className="w-50">
                           <Label for="category" >Categoría</Label>
-                          <select class="form-control" name="category" id="category" onChange={this.handleChange}>
+                          <select class="form-control" name="category" id="category" onChange={this.handleChange} required>
+                              <option value="">Seleccione una categoría</option>
                                   {optionList}
                           </select>
                       
@@ -168,12 +157,12 @@ class Expenses extends Component {
 
                       <FormGroup className="w-75">
                           <Label for="city">Fecha</Label>
-                          <Input type="date" onChange={this.handleDateChange} class="form-control" />
+                          <Input type="date" onChange={this.handleDateChange} class="form-control" required />
                       </FormGroup>
 
                       <FormGroup className="w-50">
                           <Label for="price">Precio</Label>
-                          <Input type="text" name="price" id="price" onChange={this.handleChange}/>
+                          <Input type="text" name="price" id="price" onChange={this.handleChange} required/>
                       </FormGroup>
                         
                       <FormGroup>

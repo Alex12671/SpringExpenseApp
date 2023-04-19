@@ -43,7 +43,6 @@ class ExpensesList extends Component {
         const responseExp= await fetch('/api/expenses');
         const bodyExp = await responseExp.json();
         this.setState({ExpensesList : bodyExp , isLoading :false});
-        console.log(bodyExp);
 
     }
 
@@ -86,7 +85,7 @@ class ExpensesList extends Component {
                 <td><Moment date={expense.expensedate} format="YYYY/MM/DD"/></td>
                 <td>{expense.category.name}</td>
                 <td><Link to={"/modifyExpense/" + expense.id} class="btn btn-info">Editar</Link></td>
-                <td><Button size="sm" color="danger" onClick={() => this.removeConfirmation(expense.id)}>Delete</Button></td>
+                <td><Button color="danger" onClick={() => this.removeConfirmation(expense.id)}>Delete</Button></td>
 
               </tr>
 
