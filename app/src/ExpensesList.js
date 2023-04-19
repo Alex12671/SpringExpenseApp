@@ -85,6 +85,7 @@ class ExpensesList extends Component {
                 <td>{expense.price}€</td>
                 <td><Moment date={expense.expensedate} format="YYYY/MM/DD"/></td>
                 <td>{expense.category.name}</td>
+                <td><Link to={"/modifyExpense/" + expense.id} class="btn btn-info">Editar</Link></td>
                 <td><Button size="sm" color="danger" onClick={() => this.removeConfirmation(expense.id)}>Delete</Button></td>
 
               </tr>
@@ -106,7 +107,8 @@ class ExpensesList extends Component {
                                         <th width="10%">Precio</th>
                                         <th>Fecha</th>
                                         <th>Categoría</th>
-                                        <th width="10%">Acción</th>
+                                        <th width="10%">Editar</th>
+                                        <th width="10%">Eliminar</th>
                                     </tr>
                                 </thead>
                                 <tbody>

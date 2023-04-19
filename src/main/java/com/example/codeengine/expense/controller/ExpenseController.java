@@ -3,6 +3,7 @@ package com.example.codeengine.expense.controller;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -29,6 +30,11 @@ public class ExpenseController {
 	@GetMapping("/expenses")
 	List<Expense> getExpenses(){
 		return expenseRepository.findAll();
+	}
+
+	@GetMapping("/getExpenseById/{id}")
+	Optional<Expense> findExpense(@PathVariable Long id){
+		return expenseRepository.findById(id);
 	}
 
 	@DeleteMapping("/expenses/{id}")
