@@ -14,10 +14,10 @@ class AppNav extends Component {
     } 
 
     deleteSession() {
-      sessionStorage.removeItem('user');
-      sessionStorage.removeItem('role');
-      sessionStorage.removeItem('email');
-      
+      ReactSession.set('user','');
+      ReactSession.set('role','');
+      ReactSession.set('email','');
+      window.location.href="/";
     }
 
     render() {
@@ -26,7 +26,7 @@ class AppNav extends Component {
         return (
           <div>
             <Navbar color="dark" dark expand="md">
-              <NavbarBrand href="/adminHome"><img src={Logo} alt="Logo" height="90px"/></NavbarBrand>
+              <NavbarBrand href="/adminHome"><img src={Logo} alt="Logo" height="90px"/> Expense Tracker</NavbarBrand>
                 <Nav className="ml-auto" navbar>
                   <NavItem>
                     <NavLink href="/categories">Categorías</NavLink>
@@ -35,7 +35,7 @@ class AppNav extends Component {
                     <NavLink href="/expenses">Gastos</NavLink>
                   </NavItem>
                   <NavItem>
-                    <NavLink href="#">Cerrar sesión</NavLink>
+                    <NavLink href="#" onClick={this.deleteSession}>Cerrar sesión</NavLink>
                   </NavItem>
                 </Nav>
             </Navbar>
@@ -46,7 +46,7 @@ class AppNav extends Component {
         return (
           <div>
             <Navbar color="dark" dark  expand="md">
-              <NavbarBrand href="/userHome"><img src={Logo} alt="Logo" height="90px"/>Bienvenid@ {ReactSession.get('user')}</NavbarBrand>
+              <NavbarBrand href="/userHome"><img src={Logo} alt="Logo" height="90px"/> Expense Tracker</NavbarBrand>
                 <Nav className="ml-auto" navbar>
                   <NavItem>
                     <NavLink href="/expenses">Mis gastos</NavLink>
@@ -63,15 +63,7 @@ class AppNav extends Component {
         return (
           <div>
             <Navbar color="dark" dark  expand="md">
-              <NavbarBrand href="/"><img src={Logo} alt="Logo" height="90px"/></NavbarBrand>
-                <Nav className="ml-auto" navbar>
-                  <NavItem>
-                    <NavLink href="/categories">Categorías</NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink href="/expenses">Mis gastos</NavLink>
-                  </NavItem>
-                </Nav>
+              <NavbarBrand href="/"><img src={Logo} alt="Logo" height="90px"/> Expense Tracker</NavbarBrand>
             </Navbar>
           </div>
         );

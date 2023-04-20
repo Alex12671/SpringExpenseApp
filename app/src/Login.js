@@ -50,11 +50,14 @@ class Login extends Component {
             'Bien!',
             'Las credenciales son correctas :D',
             'success'
-          )
-          ReactSession.set("email", body[0].email);
-          ReactSession.set("role", body[0].role);
-          ReactSession.set("user", body[0].name);
-
+          ).then((result) => {
+            if(result.isConfirmed) {
+              ReactSession.set("email", body[0].email);
+              ReactSession.set("role", body[0].role);
+              ReactSession.set("user", body[0].name);
+              window.location.href="/userHome";
+            }
+          })
         }
         else {
           Swal.fire(
