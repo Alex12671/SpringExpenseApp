@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
+import { ReactSession } from 'react-client-session';
 import AppNav from './AppNav';
-import {Container,Input,Button,Label, FormGroup, Form} from 'reactstrap';
+import {Container,Input,Button, Form} from 'reactstrap';
 import Swal from 'sweetalert2';
+
+ReactSession.setStoreType("localStorage");
+
 
 class Login extends Component {
 
@@ -30,8 +34,6 @@ class Login extends Component {
   async checkIfUserExists(event) {
       event.preventDefault();
       const item = this.state.item;
-      let email = item.email;
-      let password = item.password;
 
       await fetch(`/api/users/checkIfExists`, {
         method : 'POST',
@@ -49,6 +51,10 @@ class Login extends Component {
             'Las credenciales son correctas :D',
             'success'
           )
+          ReactSession.set("email", body[0].email);
+          ReactSession.set("role", body[0].role);
+          ReactSession.set("user", body[0].name);
+
         }
         else {
           Swal.fire(

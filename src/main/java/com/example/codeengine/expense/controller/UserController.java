@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.codeengine.expense.model.User;
 import com.example.codeengine.expense.repository.UserRepository;
 
 @RestController
+@SessionAttributes("userCredentials")
 @RequestMapping("/api")
 public class UserController {
 	
@@ -27,7 +29,6 @@ public class UserController {
 	
 	@PostMapping("/users/checkIfExists")
 	ResponseEntity<List<User>> findUser(@RequestBody User user) throws URISyntaxException{
-		System.out.println(user);
 		String email = user.getEmail();
 		String password = user.getPassword();
 		List<User> users = userRepository.findByEmailAndPassword(email, password);
