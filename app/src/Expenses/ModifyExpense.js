@@ -1,35 +1,27 @@
 import React, { Component } from 'react';
-import AppNav from './AppNav';
+import AppNav from '../AppNav';
 import Swal from 'sweetalert2';
 import "react-datepicker/dist/react-datepicker.css";
-import './App.css';
-import {Container,Input,Button,Label, FormGroup} from 'reactstrap';
+import '../App.css';
+import {Container,Button,Label} from 'reactstrap';
 import {Link} from 'react-router-dom';
 
-class Expenses extends Component {
- 
-    emptyItem = {
-        id : '',
-        description : '' ,
-        expensedate : new Date(),
-        price: 0,
-        category : '',
-    }
+class ModifyExpense extends Component {
 
-    
     constructor(props){
       super(props)
 
       this.state = { 
         isLoading :false,
         Categories:[],
+        Expense:[],
         date :new Date(),
-        item : this.emptyItem
+        item : '',
        }
 
-      this.handleSubmit= this.handleSubmit.bind(this);
-      this.handleChange= this.handleChange.bind(this);
-      this.handleDateChange= this.handleDateChange.bind(this);
+       this.handleSubmit= this.handleSubmit.bind(this);
+       this.handleChange= this.handleChange.bind(this);
+       this.handleDateChange= this.handleDateChange.bind(this);
 
     } 
 
@@ -103,8 +95,8 @@ class Expenses extends Component {
           }
 
         }).then(() => {
-          let updatedExpenses = [...this.state.Expenses].filter(i => i.id !== id);
-          this.setState({Expenses : updatedExpenses});
+          let updatedExpenses = [...this.state.ModifyExpense].filter(i => i.id !== id);
+          this.setState({ModifyExpense : updatedExpenses});
         });
 
     }
@@ -114,10 +106,16 @@ class Expenses extends Component {
         const response= await fetch('/api/categories');
         const body= await response.json();
         this.setState({Categories : body , isLoading :false});
+
+        var id = window.location.href.split("/").pop();
+
+        const responseExp = await fetch(`/api/getExpenseById/${id}`);
+        const bodyExp = await responseExp.json();
+        this.setState({Expense : body , item : bodyExp, isLoading :false});
     }
 
     render() { 
-        const title =<h3 class="text-center mt-4 mb-4">AÑADIR GASTO</h3>;
+        const title =<h3 class="text-center mt-4 mb-4">MODIFICAR GASTO</h3>;
         const {Categories, isLoading} =this.state;        
 
         if (isLoading)
@@ -138,37 +136,36 @@ class Expenses extends Component {
                 <Container>
                   <div class="d-flex flex-column align-items-center justify-content-center">
                       
-                      <form class="bg-white shadow rounded w-50 p-5" onSubmit={this.handleSubmit} >
+                      <form class="bg-white shadow rounded w-50 p-5" onSubmit={this.handleSubmit}>
                       {title}
-                      <FormGroup>
+                      <div class="form-group">
                           <Label for="description">Título</Label>
-                          <Input type="text" name="description" id="description" 
-                              onChange={this.handleChange} autoComplete="name" required/>
-                      </FormGroup>
+                          <input class="form-control" type="text" name="description" id="description" 
+                              onChange={this.handleChange} value={this.state.item.description} required/>
+                      </div>
 
-                      <FormGroup className="w-50">
+                      <div class="form-group w-50">
                           <Label for="category" >Categoría</Label>
                           <select class="form-control" name="category" id="category" onChange={this.handleChange} required>
-                              <option value="">Seleccione una categoría</option>
-                                  {optionList}
+                                <option value="" selected disabled>Selecciona una categoría</option>
+                                {optionList}
                           </select>
-                      
-                      </FormGroup>
+                        </div>
 
-                      <FormGroup className="w-75">
-                          <Label for="city">Fecha</Label>
-                          <Input type="date" onChange={this.handleDateChange} class="form-control" required />
-                      </FormGroup>
+                      <div class="form-group w-50">
+                          <Label for="date">Fecha</Label>
+                          <input type="text" onFocus={function(){document.getElementById('date').type='date'}} onChange={this.handleDateChange} class="form-control" name="date" id="date" value={this.state.item.expensedate} required/>
+                      </div>
 
-                      <FormGroup className="w-50">
+                      <div class="form-group w-50">
                           <Label for="price">Precio</Label>
-                          <Input type="text" name="price" id="price" onChange={this.handleChange} required/>
-                      </FormGroup>
+                          <input class="form-control" type="text" name="price" id="price" onChange={this.handleChange} value={this.state.item.price + "€"} required/>
+                      </div>
                         
-                      <FormGroup>
-                          <Button color="primary" type="submit">Guardar</Button>{' '}
+                      <div class="form-group w-50">
+                          <Button color="primary" type="submit">Editar</Button>{' '}
                           <Link to="/expenses" class="btn btn-secondary">Cancel</Link>
-                      </FormGroup>
+                      </div>
                       </form>
                   </div>
                 </Container>
@@ -178,4 +175,4 @@ class Expenses extends Component {
     }
 }
  
-export default Expenses;
+export default ModifyExpense;

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import AppNav from './AppNav';
+import AppNav from '../AppNav';
 import "react-datepicker/dist/react-datepicker.css";
-import './App.css';
+import '../App.css';
 import { Table,Container,Button} from 'reactstrap';
 import Moment from 'react-moment';
 

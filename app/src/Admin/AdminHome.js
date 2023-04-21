@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import ExpensesIcon from './Img/expensesIcon.png';
+import ExpensesIcon from '../Img/expensesIcon.png';
 import {Link } from 'react-router-dom';
 import { ReactSession } from 'react-client-session';
-import AppNav from './AppNav';
+import AppNav from '../AppNav';
 import {Container,Input,Button, Form} from 'reactstrap';
 import Swal from 'sweetalert2';
 
@@ -13,7 +13,7 @@ class UserHome extends Component {
 
     render() { 
 
-        if(ReactSession.get('role') === 'user') {
+        if(ReactSession.get('role') === 'admin') {
             return (
                 <div>
                     <AppNav/>
