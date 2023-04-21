@@ -5,10 +5,9 @@ import AppNav from '../AppNav';
 import "react-datepicker/dist/react-datepicker.css";
 import '../App.css';
 import { Table,Container,Button} from 'reactstrap';
-import Moment from 'react-moment';
 import casa from '../Img/casa.png';
 
-class ExpensesList extends Component {
+class UserList extends Component {
 
 
     
@@ -17,14 +16,13 @@ class ExpensesList extends Component {
 
       this.state = { 
         isLoading :false,
-        ExpensesList : [],
-        date :new Date(),
+        UserList : [],
        }
 
     } 
 
     async remove(id){
-        await fetch(`/api/expenses/${id}` , {
+        await fetch(`/api/users/${id}` , {
           method: 'DELETE' ,
           headers : {
             'Accept' : 'application/json',
@@ -32,8 +30,8 @@ class ExpensesList extends Component {
           }
 
         }).then(() => {
-          let updatedExpenses = [...this.state.ExpensesList].filter(i => i.id !== id);
-          this.setState({ExpensesList : updatedExpenses});
+          let updatedUsers = [...this.state.UserList].filter(i => i.id !== id);
+          this.setState({UserList : updatedUsers});
         });
 
     }
@@ -41,9 +39,9 @@ class ExpensesList extends Component {
 
     async componentDidMount() {
 
-        const responseExp= await fetch('/api/expenses');
+        const responseExp= await fetch('/api/users');
         const bodyExp = await responseExp.json();
-        this.setState({ExpensesList : bodyExp , isLoading :false});
+        this.setState({UserList : bodyExp , isLoading :false});
 
     }
 
@@ -71,22 +69,22 @@ class ExpensesList extends Component {
 
 
     render() { 
-        const title =<h3 class="text-center">LISTA DE GASTOS</h3>;
-        const {ExpensesList,isLoading} = this.state;
+        const title =<h3 class="text-center">LISTA DE USUARIOS</h3>;
+        const {UserList,isLoading} = this.state;
         
 
         if (isLoading)
             return(<div>Cargando...</div>)
 
         let rows=
-            ExpensesList.map( expense =>
-              <tr key={expense.id}>
-                <td>{expense.description}</td>
-                <td>{expense.price}€</td>
-                <td><Moment date={expense.expensedate} format="DD/MM/YYYY"/></td>
-                <td>{expense.category.name}</td>
-                <td><Link to={"/adminHome/modifyExpense/" + expense.id} class="btn btn-info">Editar</Link></td>
-                <td><Button color="danger" onClick={() => this.removeConfirmation(expense.id)}>Delete</Button></td>
+            UserList.map( user =>
+              <tr key={user.id}>
+                <td>{user.email}</td>
+                <td>{user.name}</td>
+                <td>{user.password}</td>
+                <td>{user.role}</td>
+                <td><Link to={"/adminHome/modifyUser/" + user.id} class="btn btn-info">Editar</Link></td>
+                <td><Button color="danger" onClick={() => this.removeConfirmation(user.id)}>Delete</Button></td>
 
               </tr>
 
@@ -103,10 +101,10 @@ class ExpensesList extends Component {
                             <Table className="table table-bordered table-striped table-light border-dark mt-4">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th width="30%">Descripción</th>
-                                        <th width="10%">Precio</th>
-                                        <th>Fecha</th>
-                                        <th>Categoría</th>
+                                        <th width="20%">Email</th>
+                                        <th width="20%">nombre</th>
+                                        <th width="20%">password</th>
+                                        <th width="10%">Rol</th>
                                         <th width="10%">Editar</th>
                                         <th width="10%">Eliminar</th>
                                     </tr>
@@ -115,7 +113,7 @@ class ExpensesList extends Component {
                                     {rows}
                                 </tbody>
                             </Table>
-                            <Link to="/adminHome/addExpense" class="btn btn-success">AÑADIR GASTO</Link>
+                            <Link to="/adminHome/addUser" class="btn btn-success">AÑADIR USUARIO</Link>
                             <Button className=" w-50 bg-info rounded p-1 mt-4"><Link to={"/adminHome"} class="text-white h5 m-0"> Volver a inicio   <img src={casa} class="img-fluid" width='60px'></img></Link></Button>
                         </div>
                     </Container>
@@ -124,4 +122,4 @@ class ExpensesList extends Component {
     }
 }
  
-export default ExpensesList;
+export default UserList;

@@ -25,7 +25,7 @@ class UserHome extends Component {
                             <Container className="d-flex flex-column align-items-center justify-content-center">
                                     <Button className=" w-50 bg-info rounded p-1"><Link to={"/adminHome/expenses/"} class="text-white h5 m-0">ADMINISTRAR GASTOS <img src={ExpensesIcon} class="img-fluid" width='60px'></img></Link></Button>
                                     <Button className=" w-50 bg-info rounded p-1 mt-4"><Link to={"/adminHome/categories/"} class="text-white h5 m-0">ADMINISTRAR CATEGORÍAS <img src={CategoriesIcon} class="img-fluid" width='60px'></img></Link></Button>
-                                    <Button className=" w-50 bg-info rounded p-1 mt-4"><Link to={"/adminHome/users/"} class="text-white h5 m-0">ADMINISTRAR USUARIOS <img src={UsersIcon} class="img-fluid" width='60px'></img></Link></Button>
+                                    <Button className=" w-50 bg-info rounded p-1 mt-4"><Link to={"/adminHome/UserList/"} class="text-white h5 m-0">ADMINISTRAR USUARIOS <img src={UsersIcon} class="img-fluid" width='60px'></img></Link></Button>
                             </Container>
                         </Container>
                     </Container>

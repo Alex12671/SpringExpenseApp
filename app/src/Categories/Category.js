@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AppNav from './AppNav';
+import AppNav from '../AppNav';
 
 class Category extends Component {
 
