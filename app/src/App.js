@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ReactSession } from 'react-client-session';
 import { Route, BrowserRouter as Router,Switch} from 'react-router-dom'
-import Category from './Category';
+import Category from './Categories/Category';
 import Login from './Login';
 import UserHome from './User/UserHome';
 import AdminHome from './Admin/AdminHome';

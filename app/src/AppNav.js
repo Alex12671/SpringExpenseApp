@@ -29,10 +29,10 @@ class AppNav extends Component {
               <NavbarBrand href="/adminHome"><img src={Logo} alt="Logo" height="90px"/> Expense Tracker</NavbarBrand>
                 <Nav className="ml-auto" navbar>
                   <NavItem>
-                    <NavLink href="/categories">Categorías</NavLink>
+                    <NavLink href="/adminHome/categories">Categorías</NavLink>
                   </NavItem>
                   <NavItem>
-                    <NavLink href="/expenses">Gastos</NavLink>
+                    <NavLink href="/adminHome/expenses">Gastos</NavLink>
                   </NavItem>
                   <NavItem>
                     <NavLink href="#" onClick={this.deleteSession}>Cerrar sesión</NavLink>

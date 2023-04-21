@@ -82,7 +82,7 @@ class ExpensesList extends Component {
               <tr key={expense.id}>
                 <td>{expense.description}</td>
                 <td>{expense.price}€</td>
-                <td><Moment date={expense.expensedate} format="YYYY/MM/DD"/></td>
+                <td><Moment date={expense.expensedate} format="DD/MM/YYYY"/></td>
                 <td>{expense.category.name}</td>
                 <td><Link to={"/adminHome/modifyExpense/" + expense.id} class="btn btn-info">Editar</Link></td>
                 <td><Button color="danger" onClick={() => this.removeConfirmation(expense.id)}>Delete</Button></td>

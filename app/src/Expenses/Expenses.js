@@ -54,7 +54,7 @@ class Expenses extends Component {
             'success'
           ).then((result) => {
             if(result.isConfirmed) {
-              window.location.replace("/expenses");
+              window.location.replace("/adminHome/expenses");
             }
           })
         }

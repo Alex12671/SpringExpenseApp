@@ -46,7 +46,7 @@ class ModifyExpense extends Component {
             'success'
           ).then((result) => {
             if(result.isConfirmed) {
-              window.location.replace("/expenses");
+              window.location.replace("/adminHome/expenses");
             }
           })
         }
@@ -79,26 +79,6 @@ class ModifyExpense extends Component {
       item.expensedate= date.target.value;
       this.setState({item});
     
-    }
-
-
-
-
-
-
-    async remove(id){
-        await fetch(`/api/expenses/${id}` , {
-          method: 'DELETE' ,
-          headers : {
-            'Accept' : 'application/json',
-            'Content-Type' : 'application/json'
-          }
-
-        }).then(() => {
-          let updatedExpenses = [...this.state.ModifyExpense].filter(i => i.id !== id);
-          this.setState({ModifyExpense : updatedExpenses});
-        });
-
     }
 
 
@@ -159,7 +139,7 @@ class ModifyExpense extends Component {
 
                       <div class="form-group w-50">
                           <Label for="price">Precio</Label>
-                          <input class="form-control" type="text" name="price" id="price" onChange={this.handleChange} value={this.state.item.price + "€"} required/>
+                          <input class="form-control" type="text" name="price" id="price" onChange={this.handleChange} value={this.state.item.price} required/>
                       </div>
                         
                       <div class="form-group w-50">
