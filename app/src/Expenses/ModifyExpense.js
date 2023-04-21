@@ -164,7 +164,7 @@ class ModifyExpense extends Component {
                         
                       <div class="form-group w-50">
                           <Button color="primary" type="submit">Editar</Button>{' '}
-                          <Link to="/expenses" class="btn btn-secondary">Cancel</Link>
+                          <Link to="/adminHome/expenses" class="btn btn-secondary">Cancel</Link>
                       </div>
                       </form>
                   </div>

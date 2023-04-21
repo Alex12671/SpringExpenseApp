@@ -84,7 +84,7 @@ class ExpensesList extends Component {
                 <td>{expense.price}€</td>
                 <td><Moment date={expense.expensedate} format="YYYY/MM/DD"/></td>
                 <td>{expense.category.name}</td>
-                <td><Link to={"/modifyExpense/" + expense.id} class="btn btn-info">Editar</Link></td>
+                <td><Link to={"/adminHome/modifyExpense/" + expense.id} class="btn btn-info">Editar</Link></td>
                 <td><Button color="danger" onClick={() => this.removeConfirmation(expense.id)}>Delete</Button></td>
 
               </tr>
@@ -114,7 +114,7 @@ class ExpensesList extends Component {
                                     {rows}
                                 </tbody>
                             </Table>
-                            <Link to="/addExpense" class="btn btn-success">AÑADIR GASTO</Link>
+                            <Link to="/adminHome/addExpense" class="btn btn-success">AÑADIR GASTO</Link>
                         </div>
                     </Container>
             </div>

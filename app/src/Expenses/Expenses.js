@@ -167,7 +167,7 @@ class Expenses extends Component {
                         
                       <FormGroup>
                           <Button color="primary" type="submit">Guardar</Button>{' '}
-                          <Link to="/expenses" class="btn btn-secondary">Cancel</Link>
+                          <Link to="/adminHome/expenses" class="btn btn-secondary">Cancel</Link>
                       </FormGroup>
                       </form>
                   </div>

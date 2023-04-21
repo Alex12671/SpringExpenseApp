@@ -21,10 +21,10 @@ class App extends Component {
                      <Route path='/' exact={true} component={Login}/>
                      <Route path='/userHome' exact={true} component={UserHome}/>
                      <Route path='/adminHome' exact={true} component={AdminHome}/>
-                     <Route path='/categories' exact={true} component={Category}/>
-                     <Route path='/addExpense' exact={true} component={Expenses}/>
-                     <Route path='/expenses' exact={true} component={ExpensesList}/>
-                     <Route path='/modifyExpense/:id' exact={true} component={ModifyExpense}/>
+                     <Route path='/adminHome/categories' exact={true} component={Category}/>
+                     <Route path='/adminHome/addExpense' exact={true} component={Expenses}/>
+                     <Route path='/adminHome/expenses' exact={true} component={ExpensesList}/>
+                     <Route path='/adminHome/modifyExpense/:id' exact={true} component={ModifyExpense}/>
                 </Switch>
              </Router>
         );
