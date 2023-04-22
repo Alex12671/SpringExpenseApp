@@ -56,7 +56,6 @@ class ModifyCategory extends Component {
       let item={...this.state.item};
       item[name] = value;
       this.setState({item});
-      console.log(item);
     }
 
     async componentDidMount() {
@@ -73,7 +72,7 @@ class ModifyCategory extends Component {
 
     render() { 
         const title =<h3 class="text-center mt-4 mb-4">MODIFICAR CATEGORIA</h3>;
-        const {Categories, isLoading} =this.state;        
+        const {isLoading} =this.state;        
 
         if (isLoading)
             return(<div>Cargando...</div>)

@@ -71,7 +71,7 @@ class Category extends Component {
 
     render() { 
         const title =<h3 class="text-center mt-4 mb-4">AÑADIR CATEGORIA</h3>;
-        const {Categories , isLoading} = this.state;
+        const {isLoading} = this.state;
         if(isLoading) 
             return (<div>Cargando...</div>);
         

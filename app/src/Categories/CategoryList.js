@@ -5,7 +5,6 @@ import AppNav from '../AppNav';
 import "react-datepicker/dist/react-datepicker.css";
 import '../App.css';
 import { Table,Container,Button} from 'reactstrap';
-import Moment from 'react-moment';
 import casa from '../Img/casa.png';
 
 class CategoriesList extends Component {
@@ -100,7 +99,7 @@ class CategoriesList extends Component {
                                 </tbody>
                             </Table>
                             <Link to="/adminHome/addCategories" class="btn btn-success">AÑADIR CATEGORIA</Link>
-                            <Link to={"/adminHome"} className="text-white h5 w-50 bg-info rounded mt-4"><Button className="w-100 bg-info border-0">Volver a inicio   <img src={casa} class="img-fluid" width='60px'></img></Button></Link>
+                            <Link to={"/adminHome"} className="text-white h5 w-50 bg-info rounded mt-4"><Button className="w-100 bg-info border-0">Volver a inicio   <img alt="Icono casa" src={casa} class="img-fluid" width='60px'></img></Button></Link>
                         </div>
                     </Container>
             </div>

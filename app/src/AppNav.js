@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {Nav,Navbar,NavItem,NavbarBrand, NavLink} from 'reactstrap';
-import {Navigate} from 'react-router-dom';
 import Logo from './Img/webLogo.png'
 import { ReactSession } from 'react-client-session';
 

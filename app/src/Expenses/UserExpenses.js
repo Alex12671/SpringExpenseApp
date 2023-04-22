@@ -125,7 +125,7 @@ class UserExpenses extends Component {
                                 </tbody>
                             </Table>
                             <Link to="/addExpense" class="btn btn-success">AÑADIR GASTO</Link>
-                            <Link to={"/adminHome"} class="text-white h5 m-0"><Button className=" w-50 bg-info rounded p-1 mt-4">Volver a inicio   <img src={casa} class="img-fluid" width='60px'></img></Button></Link>
+                            <Link to={"/adminHome"} class="text-white h5 m-0"><Button className=" w-50 bg-info rounded p-1 mt-4">Volver a inicio   <img alt="Icono casa" src={casa} class="img-fluid" width='60px'></img></Button></Link>
                         </div>
                     </Container>
             </div>

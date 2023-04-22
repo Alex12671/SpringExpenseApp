@@ -58,7 +58,6 @@ class ModifyUser extends Component {
         let item={...this.state.item};
         item[name] = value;
         this.setState({item});
-        console.log(item);
     }
 
 
@@ -76,7 +75,7 @@ class ModifyUser extends Component {
 
     render() { 
         const title =<h3 class="text-center mt-4 mb-4">MODIFICAR USUARIO</h3>;       
-        const {Users, isLoading} =this.state;        
+        const {isLoading} =this.state;        
 
         if (isLoading)
             return(<div>Cargando...</div>)

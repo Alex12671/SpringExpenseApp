@@ -113,7 +113,7 @@ class UserList extends Component {
                                     {rows}
                                 </tbody>
                             </Table>
-                            <Link to={"/adminHome"} className="text-white h5 w-50 bg-info rounded mt-4"><Button className="w-100 bg-info border-0">Volver a inicio   <img src={casa} class="img-fluid" width='60px'></img></Button></Link>
+                            <Link to={"/adminHome"} className="text-white h5 w-50 bg-info rounded mt-4"><Button className="w-100 bg-info border-0">Volver a inicio   <img alt="Icono casa" src={casa} class="img-fluid" width='60px'></img></Button></Link>
                         </div>
                     </Container>
             </div>

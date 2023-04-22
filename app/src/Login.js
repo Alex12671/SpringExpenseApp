@@ -46,25 +46,16 @@ class Login extends Component {
       }).then(async (res) => {
         const body = await res.json();
         if(body.length > 0){
-          console.log(body[0]);
-          Swal.fire(
-            'Bien!',
-            'Las credenciales son correctas :D',
-            'success'
-          ).then((result) => {
-            if(result.isConfirmed) {
-              ReactSession.set("email", body[0].email);
-              ReactSession.set("role", body[0].role);
-              ReactSession.set("user", body[0].name);
-              ReactSession.set("id", body[0].id);
-              if(ReactSession.get('role') === 'user') {
-                window.location.href="/userHome";
-              }
-              else {
-                window.location.href="/adminHome";
-              }
-            }
-          })
+          ReactSession.set("email", body[0].email);
+          ReactSession.set("role", body[0].role);
+          ReactSession.set("user", body[0].name);
+          ReactSession.set("id", body[0].id);
+          if(ReactSession.get('role') === 'user') {
+            window.location.href="/userHome";
+          }
+          else {
+            window.location.href="/adminHome";
+          }
         }
         else {
           Swal.fire(
