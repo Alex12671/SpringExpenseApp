@@ -113,7 +113,6 @@ class UserList extends Component {
                                     {rows}
                                 </tbody>
                             </Table>
-                            <Link to="/adminHome/addUser" class="btn btn-success">AÑADIR USUARIO</Link>
                             <Button className=" w-50 bg-info rounded p-1 mt-4"><Link to={"/adminHome"} class="text-white h5 m-0"> Volver a inicio   <img src={casa} class="img-fluid" width='60px'></img></Link></Button>
                         </div>
                     </Container>

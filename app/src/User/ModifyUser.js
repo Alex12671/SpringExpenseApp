@@ -56,7 +56,6 @@ class ModifyUser extends Component {
         let value= target.value;
         const name = target.name;
         let item={...this.state.item};
-
         item[name] = value;
         this.setState({item});
         console.log(item);
@@ -64,15 +63,15 @@ class ModifyUser extends Component {
 
 
     async componentDidMount() {
-        const response= await fetch('/api/users');
-        const body= await response.json();
-        this.setState({Users : body , isLoading :false});
+        //const response= await fetch('/api/users');
+        //const body= await response.json();
+        //this.setState({Users : body , isLoading :false});
 
         var id = window.location.href.split("/").pop();
 
         const responseExp = await fetch(`/api/getUserById/${id}`);
         const bodyExp = await responseExp.json();
-        this.setState({User : body , item : bodyExp, isLoading :false});
+        this.setState({item : bodyExp, isLoading :false});
     }
 
     render() { 

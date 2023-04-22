@@ -42,18 +42,14 @@ public class UserController {
 	Collection<User> users(){
 		return userRepository.findAll();
 	}
-		
-	//category/2
-	@GetMapping("/users/{id}")
-	ResponseEntity<?> getUser(@PathVariable Long id){
-	Optional<User> user = userRepository.findById(id);
-		return user.map(response -> ResponseEntity.ok().body(response))
-				.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-		
+
+	@GetMapping("/getUserById/{id}")
+	Optional<User> findUser(@PathVariable Long id){
+		return userRepository.findById(id);
 	}
 			
 	@PostMapping("/users")
-	ResponseEntity<User> createCategory(@Valid @RequestBody User user) throws URISyntaxException{
+	ResponseEntity<User> createUser(@Valid @RequestBody User user) throws URISyntaxException{
 		User result= userRepository.save(user);
 		return ResponseEntity.created(new URI("/api/user" + result.getId())).body(result); 
 	

@@ -8,7 +8,7 @@ import {Link} from 'react-router-dom';
 ReactSession.setStoreType("localStorage");
 
 
-class Login extends Component {
+class Registration extends Component {
 
   constructor(props){
     super(props)
@@ -16,7 +16,7 @@ class Login extends Component {
     this.state = { 
       isLoading :false,
       UsersList : [],
-      item : {email : '', password : '' },
+      item : {email : '', name : '', password : ''},
       }
 
     this.checkIfUserExists= this.checkIfUserExists.bind(this);
