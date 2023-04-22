@@ -20,8 +20,11 @@ class UserExpenses extends Component {
         isLoading :false,
         UserExpenses : [],
         GroupedExpenses : [],
-        date :new Date(),
+        date :new Date().toISOString().substring(0,10),
        }
+
+       this.previousMonth= this.previousMonth.bind(this);
+       this.followingMonth= this.followingMonth.bind(this);
 
     } 
 
@@ -45,16 +48,55 @@ class UserExpenses extends Component {
 
         var id = ReactSession.get('id');
 
-        const response= await fetch(`/api/getTotalPriceByCategory/${id}`);
+        var date = this.state.date;
+
+        const response= await fetch(`/api/getTotalPriceByCategory/${id}/${date}`);
         const body = await response.json();
         this.setState({GroupedExpenses : body , isLoading :false});
 
-        const responseExp= await fetch(`/api/userExpenses/${id}`);
+        const responseExp= await fetch(`/api/userExpenses/${id}/${date}`);
         const bodyExp = await responseExp.json();
         this.setState({UserExpenses : bodyExp , isLoading :false});
 
     }
 
+    async previousMonth() {
+      var x = new Date(this.state.date);
+      x.setDate(1);
+      x.setMonth(x.getMonth()-1);
+      this.setState({date : x.toISOString().substring(0, 10)});
+
+      var id = ReactSession.get('id');
+
+      const response= await fetch(`/api/getTotalPriceByCategory/${id}/${x.toISOString().substring(0, 10)}`);
+      const body = await response.json();
+      this.setState({GroupedExpenses : body , isLoading :false});
+
+      const responseExp= await fetch(`/api/userExpenses/${id}/${x.toISOString().substring(0, 10)}`);
+      const bodyExp = await responseExp.json();
+      this.setState({UserExpenses : bodyExp , isLoading :false});
+
+    }
+
+    async followingMonth() {
+      var x = new Date(this.state.date);
+      x.setDate(1);
+      x.setMonth(x.getMonth()+1);
+      this.setState({date : x.toISOString().substring(0, 10)});
+
+      var id = ReactSession.get('id');
+
+        var date = this.state.date ;
+
+        const response= await fetch(`/api/getTotalPriceByCategory/${id}/${x.toISOString().substring(0, 10)}`);
+        const body = await response.json();
+        this.setState({GroupedExpenses : body , isLoading :false});
+
+        const responseExp= await fetch(`/api/userExpenses/${id}/${x.toISOString().substring(0, 10)}`);
+        const bodyExp = await responseExp.json();
+        this.setState({UserExpenses : bodyExp , isLoading :false});
+
+    }
 
     removeConfirmation(id) {
         Swal.fire({
@@ -80,6 +122,7 @@ class UserExpenses extends Component {
 
     render() { 
         const title =<h3 class="text-center">LISTA DE GASTOS</h3>;
+        const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
         const {GroupedExpenses,UserExpenses,isLoading} = this.state;
         
 
@@ -105,13 +148,21 @@ class UserExpenses extends Component {
                 <p className="ml-4 display-4">{expense[0]}€</p>
               </div>              
         )
-              console.log(GroupedExpenses);
+
+        let month = months[this.state.date.substring(6,7) - 1];
+
+
         return (
             <div>
                 <AppNav/>
                     <Container>
                         <div class="d-flex flex-column justify-content-center align-items-center">
                             {title}
+                            <div class="d-flex">
+                              <Button onClick={this.previousMonth}>{"<"}</Button>
+                              <h3> Mostrando gastos del mes de {month} {this.state.date.substring(0,4)} </h3>
+                              <Button onClick={this.followingMonth}>{">"}</Button>
+                            </div>
                             <Table className="table table-bordered table-striped table-light border-dark mt-4">
                                 <thead class="table-dark">
                                     <tr>

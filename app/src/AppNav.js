@@ -64,6 +64,14 @@ class AppNav extends Component {
           <div>
             <Navbar color="dark" dark  expand="md">
               <NavbarBrand href="/"><img src={Logo} alt="Logo" height="90px"/> Expense Tracker</NavbarBrand>
+                <Nav className="ml-auto" navbar>
+                  <NavItem>
+                    <NavLink href="/">Iniciar sesión</NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink href="/users" >Registrarse</NavLink>
+                  </NavItem>
+                </Nav>
             </Navbar>
           </div>
         );

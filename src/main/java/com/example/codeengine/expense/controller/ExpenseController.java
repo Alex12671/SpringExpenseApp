@@ -4,8 +4,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,9 +36,14 @@ public class ExpenseController {
 		return expenseRepository.findAll();
 	}
 
-	@GetMapping("/userExpenses/{id}")
-	List<Expense> getExpensesByUser(@PathVariable Long id){
-		return expenseRepository.findByUser_id(id);
+	@GetMapping("/userExpenses/{id}/{date}")
+	List<Expense> getExpensesByUser(@PathVariable String id,@PathVariable String date){
+		ZoneId defaultZoneId = ZoneId.systemDefault();
+		LocalDate today = LocalDate.parse(date).withDayOfMonth(1);
+		Date fecha = Date.from(today.atStartOfDay(defaultZoneId).toInstant());
+		LocalDate lastOfCurrentMonth = today.with(TemporalAdjusters.lastDayOfMonth());
+		Date fecha2 = Date.from(lastOfCurrentMonth.atStartOfDay(defaultZoneId).toInstant());
+		return expenseRepository.getExpensesFromCurrentMonth(id,fecha,fecha2);
 	}
 
 	@GetMapping("/getExpenseById/{id}")
@@ -46,12 +51,10 @@ public class ExpenseController {
 		return expenseRepository.findById(id);
 	}
 
-	@GetMapping("/getTotalPriceByCategory/{id}")
-	List<Object> getExpensesPriceByCategory(@PathVariable String id){
-		ZoneId zoneId = ZoneId.of ( "America/Montreal" );
-		LocalDate today = LocalDate.now ( zoneId );
-		LocalDate firstOfCurrentMonth = today.withDayOfMonth( 1 ) ;
-		LocalDate lastOfCurrentMonth = today.with(TemporalAdjusters.lastDayOfMonth());
+	@GetMapping("/getTotalPriceByCategory/{id}/{date}")
+	List<Object> getExpensesPriceByCategory(@PathVariable String id,@PathVariable String date){
+		LocalDate firstOfCurrentMonth = LocalDate.parse(date).withDayOfMonth(1);
+		LocalDate lastOfCurrentMonth = firstOfCurrentMonth.with(TemporalAdjusters.lastDayOfMonth());
 		return expenseRepository.groupExpensesByUserAndCategories(id,firstOfCurrentMonth.toString(),lastOfCurrentMonth.toString());
 	}
 

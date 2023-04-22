@@ -21,7 +21,7 @@ class UserHome extends Component {
                         <Container className="w-75 flex-column bg-white shadow rounded p-3">
                             <h4 className="text-center">Bienvenid@, {ReactSession.get('user')}!</h4>
                             <Container className="d-flex flex-column align-items-center justify-content-center">
-                                    <Button className=" w-50 bg-info rounded p-1"><Link to={"/userHome/expenses"} className="text-white h5 m-0">VER TODOS MIS GASTOS <img alt="Icono gastos" src={ExpensesIcon} className="img-fluid" width='60px'></img></Link></Button>
+                                <Link to={"/userHome/expenses"} className="w-50 text-white h5 m-0"><Button className=" w-100 bg-info rounded p-1">VER TODOS MIS GASTOS <img alt="Icono gastos" src={ExpensesIcon} className="img-fluid" width='60px'></img></Button></Link>
                             </Container>
                         </Container>
                     </Container>
