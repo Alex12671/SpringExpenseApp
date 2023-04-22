@@ -57,18 +57,20 @@ class Registration extends Component {
             'success'
           ).then((result) => {
             if(result.isConfirmed) {
-              ReactSession.set("email", body.email);
-              ReactSession.set("role", body.role);
-              ReactSession.set("user", body.name);
-              console.log(ReactSession.get('role'));
-              if(ReactSession.get('role') === 'user') {
-                window.location.href="/userHome";
-                window.location.replace("/userHome");
-              }
-              else {
-                window.location.href="/adminHome";
-                window.location.replace("/adminHome");
-              }
+              window.location.href="/";
+              window.location.replace("/");
+              //ReactSession.set("email", body.email);
+              //ReactSession.set("role", body.role);
+              //ReactSession.set("user", body.name);
+              //console.log(ReactSession.get('role'));
+              //if(ReactSession.get('role') === 'user') {
+              //  window.location.href="/";
+              //  window.location.replace("/");
+             // }
+              //else {
+              //  window.location.href="/adminHome";
+              //  window.location.replace("/adminHome");
+             // }
             }
           })
         }
