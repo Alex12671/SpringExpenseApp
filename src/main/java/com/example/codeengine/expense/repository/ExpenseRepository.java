@@ -11,6 +11,6 @@ import com.example.codeengine.expense.model.Expense;
 public interface ExpenseRepository extends JpaRepository<Expense,Long> {
 	List<Expense> findByUser_id(Long id);
 
-    @Query("SELECT SUM(price) AS totalPrice, category FROM Expense WHERE user = :id GROUP BY category_id")
-    List<Expense>groupExpensesByUserAndCategories(@Param("id") Long id);
+    @Query("SELECT SUM(price) AS totalPrice, category FROM Expense WHERE user_id = :id AND expensedate BETWEEN :date AND :endDate GROUP BY category_id")
+    List<Object> groupExpensesByUserAndCategories(@Param("id") String id, @Param("date") String date,@Param("endDate") String endDate);
 }

@@ -48,7 +48,6 @@ class UserExpenses extends Component {
         const response= await fetch(`/api/getTotalPriceByCategory/${id}`);
         const body = await response.json();
         this.setState({GroupedExpenses : body , isLoading :false});
-        console.log(body);
 
         const responseExp= await fetch(`/api/userExpenses/${id}`);
         const bodyExp = await responseExp.json();
@@ -81,7 +80,7 @@ class UserExpenses extends Component {
 
     render() { 
         const title =<h3 class="text-center">LISTA DE GASTOS</h3>;
-        const {UserExpenses,isLoading} = this.state;
+        const {GroupedExpenses,UserExpenses,isLoading} = this.state;
         
 
         if (isLoading)
@@ -96,13 +95,17 @@ class UserExpenses extends Component {
                 <td>{expense.category.name}</td>
                 <td><Link to={"/modifyExpense/" + expense.id} class="btn btn-info">Editar</Link></td>
                 <td><Button color="danger" onClick={() => this.removeConfirmation(expense.id)}>Delete</Button></td>
-
               </tr>
-
-
-            )
+        );
         
-
+        let grouped =
+            GroupedExpenses.map( expense => 
+              <div className="col-3 d-flex flex-column bg-white rounded ml-3 p-1">
+                <h4 className="ml-4">{expense[1].name}</h4>
+                <p className="ml-4 display-4">{expense[0]}€</p>
+              </div>              
+        )
+              console.log(GroupedExpenses);
         return (
             <div>
                 <AppNav/>
@@ -125,7 +128,10 @@ class UserExpenses extends Component {
                                 </tbody>
                             </Table>
                             <Link to="/addExpense" class="btn btn-success">AÑADIR GASTO</Link>
-                            <Link to={"/adminHome"} class="text-white h5 m-0"><Button className=" w-50 bg-info rounded p-1 mt-4">Volver a inicio   <img alt="Icono casa" src={casa} class="img-fluid" width='60px'></img></Button></Link>
+                            <Link to={"/userHome"} class="text-white h5 w-50 bg-info rounded mt-4"><Button className="w-100 bg-info border-0">Volver a inicio   <img alt="Icono casa" src={casa} class="img-fluid" width='60px'></img></Button></Link>
+                          <div className="w-100 d-flex mt-4">
+                            {grouped}
+                          </div>
                         </div>
                     </Container>
             </div>

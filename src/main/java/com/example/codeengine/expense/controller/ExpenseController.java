@@ -2,6 +2,10 @@ package com.example.codeengine.expense.controller;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,8 +47,12 @@ public class ExpenseController {
 	}
 
 	@GetMapping("/getTotalPriceByCategory/{id}")
-	List<Expense> getExpensesPriceByCategory(@PathVariable Long id){
-		return expenseRepository.groupExpensesByUserAndCategories(id);
+	List<Object> getExpensesPriceByCategory(@PathVariable String id){
+		ZoneId zoneId = ZoneId.of ( "America/Montreal" );
+		LocalDate today = LocalDate.now ( zoneId );
+		LocalDate firstOfCurrentMonth = today.withDayOfMonth( 1 ) ;
+		LocalDate lastOfCurrentMonth = today.with(TemporalAdjusters.lastDayOfMonth());
+		return expenseRepository.groupExpensesByUserAndCategories(id,firstOfCurrentMonth.toString(),lastOfCurrentMonth.toString());
 	}
 
 	@DeleteMapping("/expenses/{id}")
