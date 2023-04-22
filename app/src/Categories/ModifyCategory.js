@@ -36,11 +36,11 @@ class ModifyCategory extends Component {
       }).then((res) => {
         if(res.statusText === "Created") {
           Swal.fire(
-            'Añadido!',
-            'Tu registro ha sido editado.',
+            'Editada!',
+            'La categoría ha sido editada.',
             'success'
           ).then((result) => {
-            if(result.isConfirmed) {
+            if(result.isConfirmed || result.isDismissed) {
               window.location.replace("/adminHome/categories");
             }
           })

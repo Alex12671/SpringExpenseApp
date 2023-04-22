@@ -42,11 +42,11 @@ class ModifyExpense extends Component {
       }).then((res) => {
         if(res.statusText === "Created") {
           Swal.fire(
-            'Añadido!',
+            'Editado!',
             'El gasto ha sido editado.',
             'success'
           ).then((result) => {
-            if(result.isConfirmed) {
+            if(result.isConfirmed || result.isDismissed) {
               if(ReactSession.get('role') === 'admin') {
                 window.location.replace("/adminHome/expenses");
               }

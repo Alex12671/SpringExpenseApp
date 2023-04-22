@@ -37,8 +37,8 @@ class ModifyUser extends Component {
       }).then((res) => {
         if(res.statusText === "Created") {
           Swal.fire(
-            'Añadido!',
-            'Tu registro ha sido añadido.',
+            'Editado!',
+            'Los datos del usuario han sido editados.',
             'success'
           ).then((result) => {
             if(result.isConfirmed) {

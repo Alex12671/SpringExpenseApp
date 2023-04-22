@@ -45,7 +45,7 @@ class Category extends Component {
               'Tu registro ha sido añadido.',
               'success'
             ).then((result) => {
-              if(result.isConfirmed) {
+              if(result.isConfirmed || result.isDismissed) {
                 window.location.replace("/adminHome/categories");
               }
             })
