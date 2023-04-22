@@ -14,6 +14,7 @@ import ExpensesList from './Expenses/ExpensesList';
 import "@fontsource/poppins";
 import UserList from './User/UserList';
 import ModifyUser from './User/ModifyUser';
+import Registration from './User/UserRegistrationForm';
 
 ReactSession.setStoreType("localStorage");
 
@@ -35,6 +36,7 @@ class App extends Component {
                      <Route path='/modifyExpense/:id' exact={true} component={ModifyExpense}/>
                      <Route path='/adminHome/userList' exact={true} component={UserList}/>
                      <Route path='/adminHome/modifyUser/:id' exact={true} component={ModifyUser}/>
+                     <Route path='/adminHome/users' exact={true} component={Registration}/>
                 </Switch>
              </Router>
         );

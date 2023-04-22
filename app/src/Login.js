@@ -78,7 +78,8 @@ class Login extends Component {
                 <Input className="form-control w-75 mb-4" type="email" name="email" placeholder="Escribe tu email..." onChange={this.handleChange} required />
                 <Input className="form-control w-75 mb-5" type="password" name="password" placeholder="Escribe tu contraseña..." onChange={this.handleChange} required />
                 <Button color="success" className="w-50 mb-3">INICIAR SESIÓN</Button>
-                <Button color="primary" className="w-50 mb-3"><Link to={"/adminHome/UserList/"} class="text-white h5 m-0">REGÍSTRATE</Link></Button>
+                {/* <Button color="primary" className="w-50 mb-3"><Link to={"/adminHome/UserList/"} class="text-white h5 m-0">REGÍSTRATE</Link></Button> */}
+                <Button color="primary" className="w-50 mb-3"><Link to={"/adminHome/users/"} class="text-white h5 m-0">REGÍSTRATE</Link></Button>
                 
               </Form>
             </div>

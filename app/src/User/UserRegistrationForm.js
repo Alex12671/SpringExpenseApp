@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { ReactSession } from 'react-client-session';
-import AppNav from './AppNav';
-import {Container,Input,Button, Form} from 'reactstrap';
+import AppNav from '../AppNav';
 import Swal from 'sweetalert2';
 import {Link} from 'react-router-dom';
+import {Container,Input,Button,Label, FormGroup, Form} from 'reactstrap';
 
 ReactSession.setStoreType("localStorage");
 
@@ -16,7 +16,12 @@ class Registration extends Component {
     this.state = { 
       isLoading :false,
       UsersList : [],
-      item : {email : '', name : '', password : ''},
+      item : {
+        id : '',
+        email : '',
+        name : '',
+        password : '',
+        role: 'user'},
       }
 
     this.checkIfUserExists= this.checkIfUserExists.bind(this);
@@ -35,8 +40,8 @@ class Registration extends Component {
   async checkIfUserExists(event) {
       event.preventDefault();
       const item = this.state.item;
-
-      await fetch(`/api/users/checkIfExists`, {
+      
+      await fetch(`/api/users`, {
         method : 'POST',
         headers : {
           'Accept': 'application/json',
@@ -45,22 +50,24 @@ class Registration extends Component {
         body : JSON.stringify(item),
       }).then(async (res) => {
         const body = await res.json();
-        if(body.length > 0){
-          console.log(body[0]);
+        if(res.statusText === "Created"){
           Swal.fire(
-            'Bien!',
-            'Las credenciales son correctas :D',
+            'Registrado!',
+            'Te has registrado correctamente!',
             'success'
           ).then((result) => {
             if(result.isConfirmed) {
-              ReactSession.set("email", body[0].email);
-              ReactSession.set("role", body[0].role);
-              ReactSession.set("user", body[0].name);
+              ReactSession.set("email", body.email);
+              ReactSession.set("role", body.role);
+              ReactSession.set("user", body.name);
+              console.log(ReactSession.get('role'));
               if(ReactSession.get('role') === 'user') {
                 window.location.href="/userHome";
+                window.location.replace("/userHome");
               }
               else {
                 window.location.href="/adminHome";
+                window.location.replace("/adminHome");
               }
             }
           })
@@ -68,7 +75,7 @@ class Registration extends Component {
         else {
           Swal.fire(
             'Vaya...',
-            'Las credenciales que has introducido son incorrectas',
+            'Este usuario ya existe (creo)',
             'error'
           )
         }
@@ -82,11 +89,23 @@ class Registration extends Component {
           <Container>
             <div class="d-flex flex-column align-items-center justify-content-center">
               <Form onSubmit={this.checkIfUserExists} className="d-flex flex-column align-items-center justify-content-center mt-5 shadow rounded w-50 bg-white">
-                <h2 class="text-center mb-5 mt-4">INICIAR SESIÓN</h2>
-                <Input className="form-control w-75 mb-4" type="email" name="email" placeholder="Escribe tu email..." onChange={this.handleChange} required />
-                <Input className="form-control w-75 mb-5" type="password" name="password" placeholder="Escribe tu contraseña..." onChange={this.handleChange} required />
-                <Button color="success" className="w-50 mb-3">INICIAR SESIÓN</Button>
-                <Button color="primary" className="w-50 mb-3"><Link to={"/adminHome/UserList/"} class="text-white h5 m-0">REGÍSTRATE</Link></Button>
+                <h2 class="text-center mb-5 mt-4">CREAR USUARIO</h2>
+                <FormGroup>
+                    <Label for="email">Email</Label>
+                    <Input type="email" name="email" id="email" 
+                        onChange={this.handleChange} autoComplete="email" required/>
+                </FormGroup>
+                <FormGroup>
+                    <Label for="name">Nombre</Label>
+                    <Input type="text" name="name" id="name" 
+                        onChange={this.handleChange} autoComplete="name" required/>
+                </FormGroup>
+                <FormGroup>
+                    <Label for="password">Contraseña</Label>
+                    <Input type="password" name="password" id="password" 
+                        onChange={this.handleChange} autoComplete="password" required/>
+                </FormGroup>
+                <Button color="success" className="w-50 mb-3">REGISTRARSE</Button>
                 
               </Form>
             </div>
@@ -96,4 +115,4 @@ class Registration extends Component {
   }
 }
  
-export default Login;
+export default Registration;
