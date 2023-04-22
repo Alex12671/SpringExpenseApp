@@ -8,6 +8,7 @@ import Login from './Login';
 import UserHome from './User/UserHome';
 import AdminHome from './Admin/AdminHome';
 import Expenses from './Expenses/Expenses';
+import UserExpenses from './Expenses/UserExpenses';
 import ModifyExpense from './Expenses/ModifyExpense';
 import ExpensesList from './Expenses/ExpensesList';
 import "@fontsource/poppins";
@@ -28,9 +29,10 @@ class App extends Component {
                      <Route path='/adminHome/categories' exact={true} component={CategoryList}/>
                      <Route path='/adminHome/addCategories' exact={true} component={Category}/>
                      <Route path='/adminHome/modifyCategories/:id' exact={true} component={ModifyCategory}/>
-                     <Route path='/adminHome/addExpense' exact={true} component={Expenses}/>
+                     <Route path='/addExpense' exact={true} component={Expenses}/>
                      <Route path='/adminHome/expenses' exact={true} component={ExpensesList}/>
-                     <Route path='/adminHome/modifyExpense/:id' exact={true} component={ModifyExpense}/>
+                     <Route path='/userHome/expenses' exact={true} component={UserExpenses}/>
+                     <Route path='/modifyExpense/:id' exact={true} component={ModifyExpense}/>
                      <Route path='/adminHome/userList' exact={true} component={UserList}/>
                      <Route path='/adminHome/modifyUser/:id' exact={true} component={ModifyUser}/>
                 </Switch>

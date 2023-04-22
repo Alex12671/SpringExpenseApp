@@ -37,7 +37,6 @@ public class Expense {
 	@ManyToOne
 	private Category category;
 	
-	@JsonIgnore
 	@ManyToOne
 	private User user;
 	

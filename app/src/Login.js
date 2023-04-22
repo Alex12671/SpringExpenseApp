@@ -56,6 +56,7 @@ class Login extends Component {
               ReactSession.set("email", body[0].email);
               ReactSession.set("role", body[0].role);
               ReactSession.set("user", body[0].name);
+              ReactSession.set("id", body[0].id);
               if(ReactSession.get('role') === 'user') {
                 window.location.href="/userHome";
               }

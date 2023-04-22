@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import AppNav from '../AppNav';
+import { ReactSession } from 'react-client-session';
 import Swal from 'sweetalert2';
 import "react-datepicker/dist/react-datepicker.css";
 import '../App.css';
@@ -42,11 +43,17 @@ class ModifyExpense extends Component {
         if(res.statusText === "Created") {
           Swal.fire(
             'Añadido!',
-            'Tu registro ha sido añadido.',
+            'El gasto ha sido editado.',
             'success'
           ).then((result) => {
             if(result.isConfirmed) {
-              window.location.replace("/adminHome/expenses");
+              if(ReactSession.get('role') === 'admin') {
+                window.location.replace("/adminHome/expenses");
+              }
+              else {
+                window.location.replace("/userHome/expenses");
+
+              }
             }
           })
         }
@@ -71,7 +78,6 @@ class ModifyExpense extends Component {
       }
       item[name] = value;
       this.setState({item});
-      console.log(item);
     }
 
     handleDateChange(date){
@@ -95,6 +101,7 @@ class ModifyExpense extends Component {
     }
 
     render() { 
+
         const title =<h3 class="text-center mt-4 mb-4">MODIFICAR GASTO</h3>;
         const {Categories, isLoading} =this.state;        
 
@@ -110,6 +117,52 @@ class ModifyExpense extends Component {
                     </option>
                 )
 
+        if(ReactSession.get('role') === 'admin') {
+            return (
+              <div>
+                  <AppNav/>
+                  <Container>
+                    <div class="d-flex flex-column align-items-center justify-content-center">
+                        
+                        <form class="bg-white shadow rounded w-50 p-5" onSubmit={this.handleSubmit}>
+                        {title}
+                        <div class="form-group">
+                            <Label for="description">Título</Label>
+                            <input class="form-control" type="text" name="description" id="description" 
+                                onChange={this.handleChange} value={this.state.item.description} required/>
+                        </div>
+
+                        <div class="form-group w-50">
+                            <Label for="category" >Categoría</Label>
+                            <select class="form-control" name="category" id="category" onChange={this.handleChange} required>
+                                  <option value="" selected disabled>Selecciona una categoría</option>
+                                  {optionList}
+                            </select>
+                          </div>
+
+                        <div class="form-group w-50">
+                            <Label for="date">Fecha</Label>
+                            <input type="text" onFocus={function(){document.getElementById('date').type='date'}} onChange={this.handleDateChange} class="form-control" name="date" id="date" value={this.state.item.expensedate} required/>
+                        </div>
+
+                        <div class="form-group w-50">
+                            <Label for="price">Precio</Label>
+                            <input class="form-control" type="text" name="price" id="price" onChange={this.handleChange} value={this.state.item.price} required/>
+                        </div>
+
+                        <input type="hidden" name="user" id="user" value={this.state.item.user}/>
+                          
+                        <div class="form-group w-50">
+                            <Button color="primary" type="submit">Editar</Button>{' '}
+                            <Link to="/adminHome/expenses" class="btn btn-secondary">Cancel</Link>
+                        </div>
+                        </form>
+                    </div>
+                  </Container>
+          </div>
+
+          );
+        }
         return (
             <div>
                 <AppNav/>
@@ -142,9 +195,11 @@ class ModifyExpense extends Component {
                           <input class="form-control" type="text" name="price" id="price" onChange={this.handleChange} value={this.state.item.price} required/>
                       </div>
                         
+                      <input type="hidden" name="user" id="user" value={this.state.item.user}/>
+
                       <div class="form-group w-50">
                           <Button color="primary" type="submit">Editar</Button>{' '}
-                          <Link to="/adminHome/expenses" class="btn btn-secondary">Cancel</Link>
+                          <Link to="/userHome/expenses" class="btn btn-secondary">Cancel</Link>
                       </div>
                       </form>
                   </div>

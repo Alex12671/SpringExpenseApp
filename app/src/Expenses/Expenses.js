@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AppNav from '../AppNav';
 import Swal from 'sweetalert2';
+import { ReactSession } from 'react-client-session';
 import "react-datepicker/dist/react-datepicker.css";
 import '../App.css';
 import {Container,Input,Button,Label, FormGroup} from 'reactstrap';
@@ -14,6 +15,7 @@ class Expenses extends Component {
         expensedate : new Date(),
         price: 0,
         category : '',
+        user : '',
     }
 
     
@@ -37,7 +39,14 @@ class Expenses extends Component {
      
       event.preventDefault();
       const item = this.state.item;
+
+      if(ReactSession.get('role') === 'user') {
+        const response = await fetch(`api/getUserById/${ReactSession.get('id')}`);
+        const body = await response.json();
+        item.user = body;
+      }
     
+
       await fetch(`/api/expenses`, {
         method : 'POST',
         headers : {
@@ -54,7 +63,13 @@ class Expenses extends Component {
             'success'
           ).then((result) => {
             if(result.isConfirmed) {
-              window.location.replace("/adminHome/expenses");
+              if(ReactSession.get('role') === 'admin') {
+                window.location.replace("/adminHome/expenses");
+              }
+              else {
+                window.location.replace("/userHome/expenses");
+
+              }
             }
           })
         }
@@ -79,7 +94,6 @@ class Expenses extends Component {
       }
       item[name] = value;
       this.setState({item});
-      console.log(item);
     }
 
     handleDateChange(date){
@@ -131,7 +145,51 @@ class Expenses extends Component {
                                 {category.name} 
                     </option>
                 )
+        if(ReactSession.get('role') === 'admin') {
+            return (
+              <div>
+                  <AppNav/>
+                  <Container>
+                    <div class="d-flex flex-column align-items-center justify-content-center">
+                        
+                        <form class="bg-white shadow rounded w-50 p-5" onSubmit={this.handleSubmit} >
+                        {title}
+                        <FormGroup>
+                            <Label for="description">Título</Label>
+                            <Input type="text" name="description" id="description" 
+                                onChange={this.handleChange} autoComplete="name" required/>
+                        </FormGroup>
 
+                        <FormGroup className="w-50">
+                            <Label for="category" >Categoría</Label>
+                            <select class="form-control" name="category" id="category" onChange={this.handleChange} required>
+                                <option value="">Seleccione una categoría</option>
+                                    {optionList}
+                            </select>
+                        
+                        </FormGroup>
+
+                        <FormGroup className="w-75">
+                            <Label for="city">Fecha</Label>
+                            <Input type="date" onChange={this.handleDateChange} class="form-control" required />
+                        </FormGroup>
+
+                        <FormGroup className="w-50">
+                            <Label for="price">Precio</Label>
+                            <Input type="text" name="price" id="price" onChange={this.handleChange} required/>
+                        </FormGroup>
+                          
+                        <FormGroup>
+                            <Button color="primary" type="submit">Guardar</Button>{' '}
+                            <Link to="/adminHome/expenses" class="btn btn-secondary">Cancel</Link>
+                        </FormGroup>
+                        </form>
+                    </div>
+                  </Container>
+          </div>
+
+          );
+        }
         return (
             <div>
                 <AppNav/>
@@ -167,7 +225,7 @@ class Expenses extends Component {
                         
                       <FormGroup>
                           <Button color="primary" type="submit">Guardar</Button>{' '}
-                          <Link to="/adminHome/expenses" class="btn btn-secondary">Cancel</Link>
+                          <Link to="/userHome/expenses" class="btn btn-secondary">Cancel</Link>
                       </FormGroup>
                       </form>
                   </div>

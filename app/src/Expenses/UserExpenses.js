@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import {Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import AppNav from '../AppNav';
+import { ReactSession } from 'react-client-session';
 import "react-datepicker/dist/react-datepicker.css";
 import '../App.css';
 import { Table,Container,Button} from 'reactstrap';
 import Moment from 'react-moment';
 import casa from '../Img/casa.png';
 
-class ExpensesList extends Component {
+class UserExpenses extends Component {
 
 
     
@@ -17,7 +18,8 @@ class ExpensesList extends Component {
 
       this.state = { 
         isLoading :false,
-        ExpensesList : [],
+        UserExpenses : [],
+        GroupedExpenses : [],
         date :new Date(),
        }
 
@@ -32,8 +34,8 @@ class ExpensesList extends Component {
           }
 
         }).then(() => {
-          let updatedExpenses = [...this.state.ExpensesList].filter(i => i.id !== id);
-          this.setState({ExpensesList : updatedExpenses});
+          let updatedExpenses = [...this.state.UserExpenses].filter(i => i.id !== id);
+          this.setState({UserExpenses : updatedExpenses});
         });
 
     }
@@ -41,9 +43,16 @@ class ExpensesList extends Component {
 
     async componentDidMount() {
 
-        const responseExp= await fetch('/api/expenses');
+        var id = ReactSession.get('id');
+
+        const response= await fetch(`/api/getTotalPriceByCategory/${id}`);
+        const body = await response.json();
+        this.setState({GroupedExpenses : body , isLoading :false});
+        console.log(body);
+
+        const responseExp= await fetch(`/api/userExpenses/${id}`);
         const bodyExp = await responseExp.json();
-        this.setState({ExpensesList : bodyExp , isLoading :false});
+        this.setState({UserExpenses : bodyExp , isLoading :false});
 
     }
 
@@ -72,14 +81,14 @@ class ExpensesList extends Component {
 
     render() { 
         const title =<h3 class="text-center">LISTA DE GASTOS</h3>;
-        const {ExpensesList,isLoading} = this.state;
+        const {UserExpenses,isLoading} = this.state;
         
 
         if (isLoading)
             return(<div>Cargando...</div>)
 
         let rows=
-            ExpensesList.map( expense =>
+            UserExpenses.map( expense =>
               <tr key={expense.id}>
                 <td>{expense.description}</td>
                 <td>{expense.price}€</td>
@@ -124,4 +133,4 @@ class ExpensesList extends Component {
     }
 }
  
-export default ExpensesList;
+export default UserExpenses;

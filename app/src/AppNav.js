@@ -17,6 +17,7 @@ class AppNav extends Component {
       ReactSession.set('user','');
       ReactSession.set('role','');
       ReactSession.set('email','');
+      ReactSession.set('id','');
       window.location.href="/";
     }
 
@@ -49,7 +50,7 @@ class AppNav extends Component {
               <NavbarBrand href="/userHome"><img src={Logo} alt="Logo" height="90px"/> Expense Tracker</NavbarBrand>
                 <Nav className="ml-auto" navbar>
                   <NavItem>
-                    <NavLink href="/expenses">Mis gastos</NavLink>
+                    <NavLink href="/userHome/expenses">Mis gastos</NavLink>
                   </NavItem>
                   <NavItem>
                     <NavLink href="#" onClick={this.deleteSession}>Cerrar sesión</NavLink>

@@ -32,9 +32,19 @@ public class ExpenseController {
 		return expenseRepository.findAll();
 	}
 
+	@GetMapping("/userExpenses/{id}")
+	List<Expense> getExpensesByUser(@PathVariable Long id){
+		return expenseRepository.findByUser_id(id);
+	}
+
 	@GetMapping("/getExpenseById/{id}")
 	Optional<Expense> findExpense(@PathVariable Long id){
 		return expenseRepository.findById(id);
+	}
+
+	@GetMapping("/getTotalPriceByCategory/{id}")
+	List<Expense> getExpensesPriceByCategory(@PathVariable Long id){
+		return expenseRepository.groupExpensesByUserAndCategories(id);
 	}
 
 	@DeleteMapping("/expenses/{id}")
