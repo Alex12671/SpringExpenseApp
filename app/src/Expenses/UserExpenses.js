@@ -96,6 +96,7 @@ class UserExpenses extends Component {
         const bodyExp = await responseExp.json();
         this.setState({UserExpenses : bodyExp , isLoading :false});
 
+
     }
 
     removeConfirmation(id) {
@@ -137,17 +138,19 @@ class UserExpenses extends Component {
                 <td><Moment date={expense.expensedate} format="DD/MM/YYYY"/></td>
                 <td>{expense.category.name}</td>
                 <td><Link to={"/modifyExpense/" + expense.id} class="btn btn-info">Editar</Link></td>
-                <td><Button color="danger" onClick={() => this.removeConfirmation(expense.id)}>Delete</Button></td>
+                <td><Button color="danger" onClick={() => this.removeConfirmation(expense.id)}>Eliminar</Button></td>
               </tr>
         );
         
         let grouped =
             GroupedExpenses.map( expense => 
-              <div className="col-3 d-flex flex-column bg-white rounded ml-3 p-1">
-                <h4 className="ml-4">{expense[1].name}</h4>
+              <div className="col-4 d-flex flex-column bg-white rounded ml-3 p-1">
+                <h4 className="ml-1">{expense[1].name}</h4>
                 <p className="ml-4 display-4">{expense[0]}€</p>
               </div>              
         )
+
+        let totalExpense = GroupedExpenses.reduce((acc, expense) => acc + expense[0], 0 );
 
         let month = months[this.state.date.substring(6,7) - 1];
 
@@ -182,6 +185,10 @@ class UserExpenses extends Component {
                             <Link to={"/userHome"} class="text-white h5 w-50 bg-info rounded mt-4"><Button className="w-100 bg-info border-0">Volver a inicio   <img alt="Icono casa" src={casa} class="img-fluid" width='60px'></img></Button></Link>
                           <div className="w-100 d-flex mt-4">
                             {grouped}
+                          </div>
+                          <div className="w-50 d-flex flex-column align-items-center justify-content-center mt-4 bg-white rounded">
+                            <h3>Gasto total de {month} {this.state.date.substring(0,4)}</h3>
+                            <p className="display-4" >{totalExpense}€</p>
                           </div>
                         </div>
                     </Container>
