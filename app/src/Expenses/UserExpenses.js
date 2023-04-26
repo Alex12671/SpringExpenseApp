@@ -8,6 +8,8 @@ import '../App.css';
 import { Table,Container,Button} from 'reactstrap';
 import Moment from 'react-moment';
 import casa from '../Img/casa.png';
+import DeleteIcon from '../Img/deleteIcon.png';
+import EditIcon from '../Img/editIcon.png';
 
 class UserExpenses extends Component {
 
@@ -128,7 +130,12 @@ class UserExpenses extends Component {
         
 
         if (isLoading)
-            return(<div>Cargando...</div>)
+            return(
+              <div>
+              <AppNav/>
+              <div>Cargando...</div>
+              </div>
+              )
 
         let rows=
             UserExpenses.map( expense =>
@@ -137,8 +144,8 @@ class UserExpenses extends Component {
                 <td>{expense.price}€</td>
                 <td><Moment date={expense.expensedate} format="DD/MM/YYYY"/></td>
                 <td>{expense.category.name}</td>
-                <td><Link to={"/modifyExpense/" + expense.id} class="btn btn-info">Editar</Link></td>
-                <td><Button color="danger" onClick={() => this.removeConfirmation(expense.id)}>Eliminar</Button></td>
+                <td className="text-center"><Link to={"/modifyExpense/" + expense.id}><img src={EditIcon} width="55px"></img></Link></td>
+                <td className="text-center deleteIcon"><img src={DeleteIcon} width="55px" onClick={() => this.removeConfirmation(expense.id)} ></img></td>
               </tr>
         );
         

@@ -25,17 +25,20 @@ class AppNav extends Component {
       if(ReactSession.get('role') === 'admin') {
         return (
           <div>
-            <Navbar color="dark" dark expand="md">
+            <Navbar className="p-0 pl-1 pr-1" color="dark" dark expand="md">
               <NavbarBrand href="/adminHome"><img src={Logo} alt="Logo" height="90px"/> Expense Tracker</NavbarBrand>
                 <Nav className="ml-auto" navbar>
                   <NavItem>
-                    <NavLink href="/adminHome/categories">Categorías</NavLink>
+                    <NavLink className="h5" href="/adminHome/categories">Categorías</NavLink>
                   </NavItem>
                   <NavItem>
-                    <NavLink href="/adminHome/expenses">Gastos</NavLink>
+                    <NavLink className="h5" href="/adminHome/expenses">Gastos</NavLink>
                   </NavItem>
                   <NavItem>
-                    <NavLink href="#" onClick={this.deleteSession}>Cerrar sesión</NavLink>
+                    <NavLink className="h5" href="/adminHome/userList">Usuarios</NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink className="h5 text-danger" href="#" onClick={this.deleteSession}>Cerrar sesión</NavLink>
                   </NavItem>
                 </Nav>
             </Navbar>
@@ -49,10 +52,10 @@ class AppNav extends Component {
               <NavbarBrand href="/userHome"><img src={Logo} alt="Logo" height="90px"/> Expense Tracker</NavbarBrand>
                 <Nav className="ml-auto" navbar>
                   <NavItem>
-                    <NavLink href="/userHome/expenses">Mis gastos</NavLink>
+                    <NavLink className="h5" href="/userHome/expenses">Mis gastos</NavLink>
                   </NavItem>
                   <NavItem>
-                    <NavLink href="#" onClick={this.deleteSession}>Cerrar sesión</NavLink>
+                    <NavLink className="h5 text-danger" href="#" onClick={this.deleteSession}>Cerrar sesión</NavLink>
                   </NavItem>
                 </Nav>
             </Navbar>
@@ -66,10 +69,10 @@ class AppNav extends Component {
               <NavbarBrand href="/"><img src={Logo} alt="Logo" height="90px"/> Expense Tracker</NavbarBrand>
                 <Nav className="ml-auto" navbar>
                   <NavItem>
-                    <NavLink href="/">Iniciar sesión</NavLink>
+                    <NavLink className="h5" href="/">Iniciar sesión</NavLink>
                   </NavItem>
                   <NavItem>
-                    <NavLink href="/users" >Registrarse</NavLink>
+                    <NavLink className="h5" href="/users" >Registrarse</NavLink>
                   </NavItem>
                 </Nav>
             </Navbar>
