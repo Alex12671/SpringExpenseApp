@@ -85,6 +85,7 @@ class UserList extends Component {
                 <td>{user.role}</td>
                 <td><Link to={"/adminHome/modifyUser/" + user.id} class="btn btn-info">Editar</Link></td>
                 <td><Button color="danger" onClick={() => this.removeConfirmation(user.id)}>Delete</Button></td>
+                <td><Link to={"/adminHome/userExpensesDetail/" + user.id} class="btn btn-secondary">Detalle</Link></td>
 
               </tr>
 
@@ -107,6 +108,7 @@ class UserList extends Component {
                                         <th width="10%">Rol</th>
                                         <th width="10%">Editar</th>
                                         <th width="10%">Eliminar</th>
+                                        <th width="10%">Detalle</th>
                                     </tr>
                                 </thead>
                                 <tbody>
