@@ -148,12 +148,14 @@ class UserExpenses extends Component {
                 <td className="text-center deleteIcon"><img src={DeleteIcon} width="55px" onClick={() => this.removeConfirmation(expense.id)} ></img></td>
               </tr>
         );
-        
         let grouped =
             GroupedExpenses.map( expense => 
-              <div className="col-4 d-flex flex-column bg-white rounded ml-3 p-1">
-                <h4 className="ml-1">{expense[1].name}</h4>
-                <p className="ml-4 display-4">{expense[0]}€</p>
+              <div className="col-4 bg-white rounded mb-3 mr-2 p-2">
+                <h5 className="text-center ml-1">{expense[1].name}</h5>
+                <div class="row justify-content-center align-items-center">
+                  <p className="text-center display-4 mr-3">{expense[0]}€</p>
+                  <img src={expense[1].img} height="55px"></img>
+                </div>              
               </div>              
         )
 
@@ -188,9 +190,12 @@ class UserExpenses extends Component {
                                     {rows}
                                 </tbody>
                             </Table>
-                            <Link to="/addExpense" class="btn btn-success">AÑADIR GASTO</Link>
-                            <Link to={"/userHome"} class="text-white h5 w-50 bg-info rounded mt-4"><Button className="w-100 bg-info border-0">Volver a inicio   <img alt="Icono casa" src={casa} class="img-fluid" width='60px'></img></Button></Link>
-                          <div className="w-100 d-flex mt-4">
+                            <div class="d-flex flex-row">
+                              <Link to="/addExpense" class="btn btn-success mr-5">AÑADIR GASTO</Link>
+                              <Link to="/addIncome" class="btn btn-success">AÑADIR INGRESO</Link>
+                            </div>
+                            <Link to={"/userHome"} class="text-white h5 w-50 bg-info rounded mt-4"><Button className="w-100 bg-info border-0">Volver a inicio   <img alt="Icono casa" src="/casa.png" class="img-fluid" width='60px'></img></Button></Link>
+                          <div className="row w-100 mt-4 justify-content-around align-items-center">
                             {grouped}
                           </div>
                           <div className="w-50 d-flex flex-column align-items-center justify-content-center mt-4 bg-white rounded">

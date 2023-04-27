@@ -11,6 +11,7 @@ class Category extends Component {
     emptyItem = {
         id : '',
         name : '',
+        img : '',
     }
 
     constructor(props){
@@ -53,6 +54,26 @@ class Category extends Component {
         });
     }
 
+    onFileChangeHandler = (e) => {
+      e.preventDefault();
+      let item={...this.state.item};
+      item.img = e.target.files[0];
+      this.setState({
+        item
+      });
+      const formData = new FormData();
+      formData.append('file', this.state.item.img);
+      fetch('/api/fileUpload', {
+          method: 'post',
+          body: formData
+      }).then(res => {
+          if(res.ok) {
+              console.log(res.data);
+              alert("File uploaded successfully.")
+          }
+      });
+  };
+
     handleChange(event){
         const target= event.target;
         let value= target.value;
@@ -60,7 +81,6 @@ class Category extends Component {
         let item={...this.state.item};
         item[name] = value;
         this.setState({item});
-        console.log(item);
     }
 
     async componentDidMount(){
@@ -87,11 +107,15 @@ class Category extends Component {
                           <Input type="text" name="name" id="name" 
                               onChange={this.handleChange} autoComplete="name" required/>
                       </FormGroup>
-
+                      <div className="form-group files color">
+                            <label>Upload Your File </label>
+                            <input type="file" className="form-control" name="file" onChange={this.onFileChangeHandler}/>
+                        </div>
                       <FormGroup>
                           <Button color="primary" type="submit">Guardar</Button>{' '}
                           <Link to="/adminHome/categories" class="btn btn-secondary">Cancel</Link>
                       </FormGroup>
+                      
                       </form>
                   </div>
                 </Container>

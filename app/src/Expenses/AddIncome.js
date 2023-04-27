@@ -7,7 +7,7 @@ import '../App.css';
 import {Container,Input,Button,Label, FormGroup} from 'reactstrap';
 import {Link} from 'react-router-dom';
 
-class Expenses extends Component {
+class AddIncome extends Component {
  
     emptyItem = {
         id : '',
@@ -86,9 +86,6 @@ class Expenses extends Component {
         this.setState({item});
         return;
       }
-      if(name === 'price') {
-        value = -Math.abs(value);
-      }
       item[name] = value;
       this.setState({item});
     }
@@ -114,8 +111,8 @@ class Expenses extends Component {
           }
 
         }).then(() => {
-          let updatedExpenses = [...this.state.Expenses].filter(i => i.id !== id);
-          this.setState({Expenses : updatedExpenses});
+          let updatedExpenses = [...this.state.AddIncome].filter(i => i.id !== id);
+          this.setState({AddIncome : updatedExpenses});
         });
 
     }
@@ -188,4 +185,4 @@ class Expenses extends Component {
     }
 }
  
-export default Expenses;
+export default AddIncome;

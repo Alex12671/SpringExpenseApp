@@ -8,6 +8,7 @@ import Login from './Login';
 import UserHome from './User/UserHome';
 import AdminHome from './Admin/AdminHome';
 import Expenses from './Expenses/Expenses';
+import AddIncome from './Expenses/AddIncome';
 import UserExpenses from './Expenses/UserExpenses';
 import ModifyExpense from './Expenses/ModifyExpense';
 import ExpensesList from './Expenses/ExpensesList';
@@ -32,6 +33,7 @@ class App extends Component {
                      <Route path='/adminHome/addCategories' exact={true} component={Category}/>
                      <Route path='/adminHome/modifyCategories/:id' exact={true} component={ModifyCategory}/>
                      <Route path='/addExpense' exact={true} component={Expenses}/>
+                     <Route path='/addIncome' exact={true} component={AddIncome}/>
                      <Route path='/adminHome/expenses' exact={true} component={ExpensesList}/>
                      <Route path='/userHome/expenses' exact={true} component={UserExpenses}/>
                      <Route path='/modifyExpense/:id' exact={true} component={ModifyExpense}/>
