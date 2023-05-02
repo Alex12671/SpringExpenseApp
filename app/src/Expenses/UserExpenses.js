@@ -124,7 +124,7 @@ class UserExpenses extends Component {
 
 
     render() { 
-        const title =<h3 class="text-center">LISTA DE GASTOS</h3>;
+        const title =<h2 class="text-center">LISTA DE GASTOS</h2>;
         const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
         const {GroupedExpenses,UserExpenses,isLoading} = this.state;
         
@@ -170,6 +170,11 @@ class UserExpenses extends Component {
                     <Container>
                         <div class="d-flex flex-column justify-content-center align-items-center">
                             {title}
+                            <Link to={"/userHome"} className="text-white w-25 bg-info rounded mt-4 mb-5"><Button className="w-100 bg-info border-0"><span className="h5 m-0">Volver a inicio</span>   <img alt="Icono casa" src="/casa.png" class="img-fluid" width='60px'></img></Button></Link>
+                            <div class="d-flex flex-row mb-3">
+                              <Link to="/addExpense" class="btn btn-success mr-5">AÑADIR GASTO</Link>
+                              <Link to="/addIncome" class="btn btn-success">AÑADIR INGRESO</Link>
+                            </div>
                             <div class="d-flex">
                               <Button onClick={this.previousMonth}>{"<"}</Button>
                               <h3> Mostrando gastos del mes de {month} {this.state.date.substring(0,4)} </h3>
@@ -190,11 +195,6 @@ class UserExpenses extends Component {
                                     {rows}
                                 </tbody>
                             </Table>
-                            <div class="d-flex flex-row">
-                              <Link to="/addExpense" class="btn btn-success mr-5">AÑADIR GASTO</Link>
-                              <Link to="/addIncome" class="btn btn-success">AÑADIR INGRESO</Link>
-                            </div>
-                            <Link to={"/userHome"} class="text-white h5 w-50 bg-info rounded mt-4"><Button className="w-100 bg-info border-0">Volver a inicio   <img alt="Icono casa" src="/casa.png" class="img-fluid" width='60px'></img></Button></Link>
                           <div className="row w-100 mt-4 justify-content-around align-items-center">
                             {grouped}
                           </div>
