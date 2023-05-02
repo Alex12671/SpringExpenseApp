@@ -58,6 +58,26 @@ public class ExpenseController {
 		return expenseRepository.groupExpensesByUserAndCategories(id,firstOfCurrentMonth.toString(),lastOfCurrentMonth.toString());
 	}
 
+	@GetMapping("/getMonthlyExpenses/{id}")
+	Integer showMonthlyExpenses(@PathVariable String id){
+		ZoneId defaultZoneId = ZoneId.systemDefault();
+		LocalDate firstOfCurrentMonth = LocalDate.now().withDayOfMonth(1);
+		Date fecha = Date.from(firstOfCurrentMonth.atStartOfDay(defaultZoneId).toInstant());
+		LocalDate lastOfCurrentMonth = firstOfCurrentMonth.with(TemporalAdjusters.lastDayOfMonth());
+		Date fecha2 = Date.from(lastOfCurrentMonth.atStartOfDay(defaultZoneId).toInstant());
+		return expenseRepository.getMonthlyExpenses(id,fecha,fecha2);
+	}
+
+	@GetMapping("/getLastMonthExpenses/{id}")
+	Integer showLastMonthExpenses(@PathVariable String id){
+		ZoneId defaultZoneId = ZoneId.systemDefault();
+		LocalDate firstOfCurrentMonth = LocalDate.now().minusMonths(1).withDayOfMonth(1);
+		Date fecha = Date.from(firstOfCurrentMonth.atStartOfDay(defaultZoneId).toInstant());
+		LocalDate lastOfCurrentMonth = firstOfCurrentMonth.with(TemporalAdjusters.lastDayOfMonth());
+		Date fecha2 = Date.from(lastOfCurrentMonth.atStartOfDay(defaultZoneId).toInstant());
+		return expenseRepository.getLastMonthExpenses(id,fecha,fecha2);
+	}
+
 	@DeleteMapping("/expenses/{id}")
 	ResponseEntity<?>  deleteExpense(@PathVariable Long id){
 		expenseRepository.deleteById(id);

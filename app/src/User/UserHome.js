@@ -10,9 +10,47 @@ ReactSession.setStoreType("localStorage");
 
 class UserHome extends Component {
 
-    render() { 
+    constructor(props){
+        super(props)
+  
+        this.state = { 
+          isLoading :false,
+          LastMonthExpenses : '',
+          TotalExpensesPrice : '',
+          date :new Date().toISOString().substring(0,10),
+         }
+  
+    } 
 
+    async componentDidMount() {
+
+        var id = ReactSession.get('id');
+
+        var date = this.state.date;
+
+        const response= await fetch(`/api/getMonthlyExpenses/${id}`);
+        const body = await response.json();
+        this.setState({TotalExpensesPrice : body , isLoading :false});
+
+        const responseExp= await fetch(`/api/getLastMonthExpenses/${id}`);
+        const bodyExp = await responseExp.json();
+        this.setState({LastMonthExpenses : bodyExp , isLoading :false});
+    }
+
+    render() { 
         if(ReactSession.get('role') === 'user') {
+
+            let percentage = 0;
+            let color;
+            if(Math.abs(this.state.TotalExpensesPrice) > Math.abs(this.state.LastMonthExpenses)) {
+                percentage = ((Math.abs(this.state.TotalExpensesPrice) / Math.abs(this.state.LastMonthExpenses)) * 100).toFixed(2);
+                color = 'text-danger';
+            }
+            else {
+                percentage = ((Math.abs(this.state.LastMonthExpenses) / Math.abs(this.state.TotalExpensesPrice)) * 100).toFixed(2);
+                color = 'text-success';
+            }
+
             return (
                 <div>
                     <AppNav/>
@@ -22,6 +60,14 @@ class UserHome extends Component {
                             <h4 className="text-center">Bienvenid@, {ReactSession.get('user')}!</h4>
                             <Container className="d-flex flex-column align-items-center justify-content-center">
                                 <Link to={"/userHome/expenses"} className="w-50 text-white h5 m-0"><Button className=" w-100 bg-info rounded p-1">VER TODOS MIS GASTOS <img alt="Icono gastos" src={ExpensesIcon} className="img-fluid" width='60px'></img></Button></Link>
+                            </Container>
+                        </Container>
+                        <Container className="w-50 flex-column bg-white shadow rounded p-3">
+                            <h4 className="text-center">Gastos totales este mes</h4>
+                            <Container className="d-flex flex-column align-items-center justify-content-center">
+                                <p className='display-4'>{Math.abs(this.state.TotalExpensesPrice)}€</p>
+                                <p className='align-self-start h5 m-0 mt-3'>Gastos del mes pasado: {Math.abs(this.state.LastMonthExpenses)}€</p>
+                                <p className='align-self-start h5 m-0 mt-3'>Diferencia: <span className={color}>{percentage}%</span></p>
                             </Container>
                         </Container>
                     </Container>
