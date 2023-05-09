@@ -27,6 +27,7 @@ class UserExpenses extends Component {
 
        this.previousMonth= this.previousMonth.bind(this);
        this.followingMonth= this.followingMonth.bind(this);
+       this.filterExpenses= this.filterExpenses.bind(this);
 
     } 
 
@@ -59,7 +60,6 @@ class UserExpenses extends Component {
         const responseExp= await fetch(`/api/userExpenses/${id}/${date}`);
         const bodyExp = await responseExp.json();
         this.setState({UserExpenses : bodyExp , isLoading :false});
-
     }
 
     async previousMonth() {
@@ -98,6 +98,35 @@ class UserExpenses extends Component {
         const bodyExp = await responseExp.json();
         this.setState({UserExpenses : bodyExp , isLoading :false});
 
+
+    }
+
+    async filterExpenses() {
+      var x = new Date(this.state.date);
+      this.setState({date : x.toISOString().substring(0, 10)});
+
+      var id = ReactSession.get('id');
+
+      var text = document.getElementById('buscar').value;
+
+      if(text.value != "") {
+        const response= await fetch(`/api/getTotalPriceByCategory/${id}/${x.toISOString().substring(0, 10)}`);
+        const body = await response.json();
+        this.setState({GroupedExpenses : body , isLoading :false});
+  
+        const responseExp= await fetch(`/api/filterExpenses/${id}/${x.toISOString().substring(0, 10)}/${text}`);
+        const bodyExp = await responseExp.json();
+        this.setState({UserExpenses : bodyExp , isLoading :false});
+        return;
+      }
+      const response= await fetch(`/api/getTotalPriceByCategory/${id}/${x.toISOString().substring(0, 10)}`);
+        const body = await response.json();
+        this.setState({GroupedExpenses : body , isLoading :false});
+  
+        const responseExp= await fetch(`/api/filterExpenses/${id}/${x.toISOString().substring(0, 10)}/""`);
+        const bodyExp = await responseExp.json();
+        this.setState({UserExpenses : bodyExp , isLoading :false});
+        return;
 
     }
 
@@ -175,10 +204,13 @@ class UserExpenses extends Component {
                               <Link to="/addExpense" class="btn btn-success mr-5">AÑADIR GASTO</Link>
                               <Link to="/addIncome" class="btn btn-success">AÑADIR INGRESO</Link>
                             </div>
-                            <div class="d-flex">
+                            <div class="d-flex mb-4">
                               <Button onClick={this.previousMonth}>{"<"}</Button>
                               <h3> Mostrando gastos del mes de {month} {this.state.date.substring(0,4)} </h3>
                               <Button onClick={this.followingMonth}>{">"}</Button>
+                            </div>
+                            <div class="d-flex justify-content-center align-items-center w-50">
+                              <input id="buscar" className="form-control w-50" onBlur={this.filterExpenses} type="text" placeholder="Buscar por nombre..."/>
                             </div>
                             <Table className="table table-bordered table-striped table-light border-dark mt-4">
                                 <thead class="table-dark">

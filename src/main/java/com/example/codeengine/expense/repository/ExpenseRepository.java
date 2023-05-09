@@ -23,4 +23,7 @@ public interface ExpenseRepository extends JpaRepository<Expense,Long> {
 
     @Query("SELECT e FROM Expense e WHERE user_id = :id AND expensedate BETWEEN :date AND :endDate")
     List<Expense> getExpensesFromCurrentMonth(@Param("id") String id, @Param("date") Date fecha,@Param("endDate") Date fecha2);
+
+    @Query("SELECT e FROM Expense e WHERE user_id = :id AND expensedate BETWEEN :date AND :endDate AND description LIKE :description")
+    List<Expense> filterCurrentMonthExpenses(@Param("id") String id, @Param("date") Date fecha,@Param("endDate") Date fecha2,@Param("description") String description);
 }

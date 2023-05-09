@@ -46,6 +46,16 @@ public class ExpenseController {
 		return expenseRepository.getExpensesFromCurrentMonth(id,fecha,fecha2);
 	}
 
+	@GetMapping("/filterExpenses/{id}/{date}/{description}")
+	List<Expense> filterExpenses(@PathVariable String id,@PathVariable String date,@PathVariable String description){
+		ZoneId defaultZoneId = ZoneId.systemDefault();
+		LocalDate today = LocalDate.parse(date).withDayOfMonth(1);
+		Date fecha = Date.from(today.atStartOfDay(defaultZoneId).toInstant());
+		LocalDate lastOfCurrentMonth = today.with(TemporalAdjusters.lastDayOfMonth());
+		Date fecha2 = Date.from(lastOfCurrentMonth.atStartOfDay(defaultZoneId).toInstant());
+		return expenseRepository.filterCurrentMonthExpenses(id,fecha,fecha2,"%" + description + "%");
+	}
+
 	@GetMapping("/getExpenseById/{id}")
 	Optional<Expense> findExpense(@PathVariable Long id){
 		return expenseRepository.findById(id);
