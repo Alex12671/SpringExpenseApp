@@ -10,6 +10,7 @@ import Moment from 'react-moment';
 import casa from '../Img/casa.png';
 import DeleteIcon from '../Img/deleteIcon.png';
 import EditIcon from '../Img/editIcon.png';
+import { Pie } from 'react-chartjs-2';
 
 class UserExpenses extends Component {
 
@@ -22,7 +23,11 @@ class UserExpenses extends Component {
         isLoading :false,
         UserExpenses : [],
         GroupedExpenses : [],
-        date :new Date().toISOString().substring(0,10),
+        date : new Date().toISOString().substring(0,10),
+        colores : [],
+        data : [],
+        opciones : [],
+        porcentajes: [],
        }
 
        this.previousMonth= this.previousMonth.bind(this);
@@ -50,16 +55,24 @@ class UserExpenses extends Component {
     async componentDidMount() {
 
         var id = ReactSession.get('id');
-
         var date = this.state.date;
 
-        const response= await fetch(`/api/getTotalPriceByCategory/${id}/${date}`);
-        const body = await response.json();
+        const response = await fetch(`/api/getTotalPriceByCategory/${id}/${date}`);
+        const body     = await response.json();
         this.setState({GroupedExpenses : body , isLoading :false});
 
-        const responseExp= await fetch(`/api/userExpenses/${id}/${date}`);
-        const bodyExp = await responseExp.json();
+        const responseExp = await fetch(`/api/userExpenses/${id}/${date}`);
+        const bodyExp     = await responseExp.json();
         this.setState({UserExpenses : bodyExp , isLoading :false});
+
+        // const porcentajes = [];
+        // for (let i = 0; i < body; i++) {
+        //   porcentajes.push(body[i]);
+        // }
+
+        await this.generarColores();
+        this.configurarGrafica();
+
     }
 
     async previousMonth() {
@@ -151,6 +164,44 @@ class UserExpenses extends Component {
           })
     }
 
+    generarCaracter() {
+      var caracter = ["a","b","c","d","e","f","0","1","2","3","4","5","6","7","8","9"];
+      var numero   = [Number(Math.random()*15).toFixed(0)];
+      return caracter[numero];
+    }
+
+    colorHex() {
+      var color = '';
+      for(var i = 0; i<6; i++) {
+        color = color + this.generarCaracter();
+      }
+      return '#' + color;
+    }
+    
+    generarColores() {
+      var colores = [];
+      for(var i= 0; i<this.state.GroupedExpenses.length; i++) {
+        colores.push(this.colorHex());
+      }
+      this.setState({colores: colores});
+      console.log(this.state.colores);
+    }
+
+    configurarGrafica() {
+      const data = {
+        labels: this.state.GroupedExpenses,
+        datasets:[{
+          data: this.state.GroupedExpenses,
+          backgroundColor: this.state.colores,
+        }]
+      };
+
+      const opciones = {
+        responsive: true,
+        maintainAspectRatio: false,
+      }
+      this.setState({data: data, opciones: opciones});
+    }
 
     render() { 
         const title =<h2 class="text-center">LISTA DE GASTOS</h2>;
@@ -229,6 +280,9 @@ class UserExpenses extends Component {
                             </Table>
                           <div className="row w-100 mt-4 justify-content-around align-items-center">
                             {grouped}
+                          </div>
+                          <div style={{ width: '100%', heigh: '500px' }}>
+                            <Pie data={this.state.data} options={this.state.opciones}/>
                           </div>
                           <div className="w-50 d-flex flex-column align-items-center justify-content-center mt-4 bg-white rounded">
                             <h3>Gasto total de {month} {this.state.date.substring(0,4)}</h3>
