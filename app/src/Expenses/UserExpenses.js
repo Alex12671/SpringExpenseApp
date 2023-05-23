@@ -21,8 +21,6 @@ class UserExpenses extends Component {
         UserExpenses : [],
         GroupedExpenses : [],
         date :new Date().toISOString().substring(0,10),
-        data: [],
-        options: [],
        }
 
        this.previousMonth= this.previousMonth.bind(this);
@@ -60,8 +58,6 @@ class UserExpenses extends Component {
         const responseExp= await fetch(`/api/userExpenses/${id}/${date}`);
         const bodyExp = await responseExp.json();
         this.setState({UserExpenses : bodyExp , isLoading :false});
-
-        // this.createPieChart();
     }
 
     async previousMonth() {
@@ -132,31 +128,6 @@ class UserExpenses extends Component {
 
     }
 
-    // async createPieChart() {
-    //   let array1 = [];
-    //   let array2 = [];
-    //   for (let i = 0; i < this.state.GroupedExpenses.length; i++) {
-    //      array1.push(this.state.GroupedExpenses[i][1].name);
-    //      array2.push(this.state.GroupedExpenses[i][0]);
-    //   }
-
-    //   let data  = [];
-    //   data.push(["Task", "Expenses"])
-    //   let array = [];
-    //   for (let i = 0; i < array1.length; i++) {
-    //     array.push(array1[i]);
-    //     array.push(array2[i] * -1 );
-    //     data.push(array);
-    //     array = [];
-    //   }
-      
-    //   let options = {
-    //     title: "My Expenses",
-    //   };
-
-    //   this.setState({data: data, options: options});
-    // }
-
     removeConfirmation(id) {
         Swal.fire({
             title: 'Estás seguro?',
@@ -195,7 +166,10 @@ class UserExpenses extends Component {
         let array = [];
         for (let i = 0; i < array1.length; i++) {
           array.push(array1[i]);
-          array.push(array2[i] * -1 );
+          if (array2[i] < 0 ) {
+            array2[i] = array2[i] * -1
+          }
+          array.push(array2[i]);
           dataArray.push(array);
           array = [];
         }
@@ -274,9 +248,6 @@ class UserExpenses extends Component {
                                     {rows}
                                 </tbody>
                             </Table>
-                          {/* <div className="row w-100 mt-4 justify-content-around align-items-center">
-                            {grouped}
-                          </div> */}
                           <div>
                             <Chart
                               chartType="PieChart"

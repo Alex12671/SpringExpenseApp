@@ -8,7 +8,7 @@ import '../App.css';
 import { Table,Container,Button} from 'reactstrap';
 import Moment from 'react-moment';
 import UsersIcon from '../Img/usersIcon.png';
-
+import { Chart } from "react-google-charts";
 class UserExpensesDetails extends Component {
     
     constructor(props){
@@ -64,7 +64,7 @@ class UserExpensesDetails extends Component {
       x.setMonth(x.getMonth()-1);
       this.setState({date : x.toISOString().substring(0, 10)});
 
-      var id = ReactSession.get('id');
+      const id = this.props.match.params.id;
 
       const response= await fetch(`/api/getTotalPriceByCategory/${id}/${x.toISOString().substring(0, 10)}`);
       const body = await response.json();
@@ -140,13 +140,29 @@ class UserExpensesDetails extends Component {
               </tr>
         );
         
-        let grouped =
-            GroupedExpenses.map( expense => 
-              <div className="col-4 d-flex flex-column bg-white rounded ml-3 p-1">
-                <h4 className="ml-1">{expense[1].name}</h4>
-                <p className="ml-4 display-4">{expense[0]}€</p>
-              </div>              
-        )
+        let array1 = [];
+        let array2 = [];
+        for (let i = 0; i < this.state.GroupedExpenses.length; i++) {
+          array1.push(this.state.GroupedExpenses[i][1].name);
+          array2.push(this.state.GroupedExpenses[i][0]);
+        }
+
+        let dataArray = [];
+        dataArray.push(["Task", "Expenses"])
+        let array = [];
+        for (let i = 0; i < array1.length; i++) {
+          array.push(array1[i]);
+          if (array2[i] < 0 ) {
+            array2[i] = array2[i] * -1
+          }
+          array.push(array2[i]);
+          dataArray.push(array);
+          array = [];
+        }
+        const data = dataArray;
+        const options = {
+          title: "My Expenses",
+        };
 
         let totalExpense = GroupedExpenses.reduce((acc, expense) => acc + expense[0], 0 );
 
@@ -161,7 +177,7 @@ class UserExpensesDetails extends Component {
                             {title}
                             <div class="d-flex">
                               <Button onClick={this.previousMonth}>{"<"}</Button>
-                              <h3> Mostrando gastos del mes de {month} {this.state.date.substring(0,4)} </h3>
+                              <h3> Mostrando balance del mes de {month} {this.state.date.substring(0,4)} </h3>
                               <Button onClick={this.followingMonth}>{">"}</Button>
                             </div>
                             <Table className="table table-bordered table-striped table-light border-dark mt-4">
@@ -180,9 +196,15 @@ class UserExpensesDetails extends Component {
                                 </tbody>
                             </Table>
                             <Link to={"/adminHome/UserList/"} className="text-white h5 w-50 bg-info rounded mt-4"><Button className="w-100 bg-info">ADMINISTRAR USUARIOS <img alt="Icono usuarios" src={UsersIcon} class="img-fluid" width='60px'></img></Button></Link>
-                          <div className="w-100 d-flex mt-4">
-                            {grouped}
-                          </div>
+                          <div>
+                            <Chart
+                              chartType="PieChart"
+                              data={data}
+                              options={options}
+                              width={"100%"}
+                              height={"400px"}
+                            />
+                        </div>
                           <div className="w-50 d-flex flex-column align-items-center justify-content-center mt-4 bg-white rounded">
                             <h3>Gasto total de {month} {this.state.date.substring(0,4)}</h3>
                             <p className="display-4" >{totalExpense}€</p>
