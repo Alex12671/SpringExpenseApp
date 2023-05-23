@@ -32,7 +32,7 @@ public class Expense {
 	
 	private String description;
 	
-	private Integer price;
+	private Float price;
 	
 	@ManyToOne
 	private Category category;

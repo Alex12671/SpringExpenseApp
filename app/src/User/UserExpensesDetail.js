@@ -166,6 +166,8 @@ class UserExpensesDetails extends Component {
 
         let totalExpense = GroupedExpenses.reduce((acc, expense) => acc + expense[0], 0 );
 
+        totalExpense = Number(totalExpense.toFixed(2));
+
         let month = months[this.state.date.substring(6,7) - 1];
 
 

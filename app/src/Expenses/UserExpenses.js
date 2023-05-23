@@ -151,7 +151,7 @@ class UserExpenses extends Component {
 
 
     render() { 
-        const title =<h2 class="text-center">LISTA DE GASTOS</h2>;
+        const title =<h2 class="text-center">BALANCE</h2>;
         const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
         const {GroupedExpenses,UserExpenses,isLoading} = this.state;
         let array1 = [];
@@ -210,6 +210,8 @@ class UserExpenses extends Component {
         )
 
         let totalExpense = GroupedExpenses.reduce((acc, expense) => acc + expense[0], 0 );
+        
+        totalExpense = Number(totalExpense.toFixed(2));
 
         let month = months[this.state.date.substring(6,7) - 1];
 
