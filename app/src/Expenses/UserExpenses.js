@@ -10,11 +10,9 @@ import Moment from 'react-moment';
 import casa from '../Img/casa.png';
 import DeleteIcon from '../Img/deleteIcon.png';
 import EditIcon from '../Img/editIcon.png';
+import { Chart } from "react-google-charts";
 
 class UserExpenses extends Component {
-
-
-    
     constructor(props){
       super(props)
 
@@ -23,6 +21,8 @@ class UserExpenses extends Component {
         UserExpenses : [],
         GroupedExpenses : [],
         date :new Date().toISOString().substring(0,10),
+        data: [],
+        options: [],
        }
 
        this.previousMonth= this.previousMonth.bind(this);
@@ -60,6 +60,8 @@ class UserExpenses extends Component {
         const responseExp= await fetch(`/api/userExpenses/${id}/${date}`);
         const bodyExp = await responseExp.json();
         this.setState({UserExpenses : bodyExp , isLoading :false});
+
+        // this.createPieChart();
     }
 
     async previousMonth() {
@@ -130,6 +132,31 @@ class UserExpenses extends Component {
 
     }
 
+    // async createPieChart() {
+    //   let array1 = [];
+    //   let array2 = [];
+    //   for (let i = 0; i < this.state.GroupedExpenses.length; i++) {
+    //      array1.push(this.state.GroupedExpenses[i][1].name);
+    //      array2.push(this.state.GroupedExpenses[i][0]);
+    //   }
+
+    //   let data  = [];
+    //   data.push(["Task", "Expenses"])
+    //   let array = [];
+    //   for (let i = 0; i < array1.length; i++) {
+    //     array.push(array1[i]);
+    //     array.push(array2[i] * -1 );
+    //     data.push(array);
+    //     array = [];
+    //   }
+      
+    //   let options = {
+    //     title: "My Expenses",
+    //   };
+
+    //   this.setState({data: data, options: options});
+    // }
+
     removeConfirmation(id) {
         Swal.fire({
             title: 'Estás seguro?',
@@ -156,7 +183,27 @@ class UserExpenses extends Component {
         const title =<h2 class="text-center">LISTA DE GASTOS</h2>;
         const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
         const {GroupedExpenses,UserExpenses,isLoading} = this.state;
-        
+        let array1 = [];
+        let array2 = [];
+        for (let i = 0; i < this.state.GroupedExpenses.length; i++) {
+          array1.push(this.state.GroupedExpenses[i][1].name);
+          array2.push(this.state.GroupedExpenses[i][0]);
+        }
+
+        let dataArray = [];
+        dataArray.push(["Task", "Expenses"])
+        let array = [];
+        for (let i = 0; i < array1.length; i++) {
+          array.push(array1[i]);
+          array.push(array2[i] * -1 );
+          dataArray.push(array);
+          array = [];
+        }
+        const data = dataArray;
+        const options = {
+          title: "My Expenses",
+        };
+
 
         if (isLoading)
             return(
@@ -227,11 +274,20 @@ class UserExpenses extends Component {
                                     {rows}
                                 </tbody>
                             </Table>
-                          <div className="row w-100 mt-4 justify-content-around align-items-center">
+                          {/* <div className="row w-100 mt-4 justify-content-around align-items-center">
                             {grouped}
-                          </div>
+                          </div> */}
+                          <div>
+                            <Chart
+                              chartType="PieChart"
+                              data={data}
+                              options={options}
+                              width={"100%"}
+                              height={"400px"}
+                            />
+                        </div>
                           <div className="w-50 d-flex flex-column align-items-center justify-content-center mt-4 bg-white rounded">
-                            <h3>Gasto total de {month} {this.state.date.substring(0,4)}</h3>
+                            <h3>Balance total de {month} {this.state.date.substring(0,4)}</h3>
                             <p className="display-4" >{totalExpense}€</p>
                           </div>
                         </div>

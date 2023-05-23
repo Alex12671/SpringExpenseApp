@@ -28,12 +28,23 @@ class UserHome extends Component {
 
         var date = this.state.date;
 
-        const response= await fetch(`/api/getMonthlyExpenses/${id}`);
-        const body = await response.json();
+        const response = await fetch(`/api/getMonthlyExpenses/${id}`);
+        let body = 0;
+        try {
+            body = await response.json();
+        } catch (error) {
+            body = 0;
+        }
         this.setState({TotalExpensesPrice : body , isLoading :false});
 
-        const responseExp= await fetch(`/api/getLastMonthExpenses/${id}`);
-        const bodyExp = await responseExp.json();
+        const responseExp = await fetch(`/api/getLastMonthExpenses/${id}`);
+        
+        let bodyExp = 0;
+        try {
+            bodyExp = await responseExp.json();
+        } catch (error) {
+            bodyExp = 0;
+        }
         this.setState({LastMonthExpenses : bodyExp , isLoading :false});
     }
 
@@ -44,11 +55,15 @@ class UserHome extends Component {
             let color;
             if(Math.abs(this.state.TotalExpensesPrice) > Math.abs(this.state.LastMonthExpenses)) {
                 percentage = ((Math.abs(this.state.TotalExpensesPrice) / Math.abs(this.state.LastMonthExpenses)) * 100).toFixed(2);
-                color = 'text-danger';
+                color      = 'text-success';
             }
             else {
                 percentage = ((Math.abs(this.state.LastMonthExpenses) / Math.abs(this.state.TotalExpensesPrice)) * 100).toFixed(2);
-                color = 'text-success';
+                color      = 'text-danger';
+            }
+            if (Math.abs(this.state.LastMonthExpenses) === 0 || Math.abs(this.state.TotalExpensesPrice) === 0) {
+                percentage  = 0;
+                color       = 'text-danger';
             }
 
             return (
@@ -63,10 +78,10 @@ class UserHome extends Component {
                             </Container>
                         </Container>
                         <Container className="w-50 flex-column bg-white shadow rounded p-3">
-                            <h4 className="text-center">Gastos totales este mes</h4>
+                            <h4 className="text-center">Balance totales este mes</h4>
                             <Container className="d-flex flex-column align-items-center justify-content-center">
                                 <p className='display-4'>{Math.abs(this.state.TotalExpensesPrice)}€</p>
-                                <p className='align-self-start h5 m-0 mt-3'>Gastos del mes pasado: {Math.abs(this.state.LastMonthExpenses)}€</p>
+                                <p className='align-self-start h5 m-0 mt-3'>Balance del mes pasado: {Math.abs(this.state.LastMonthExpenses)}€</p>
                                 <p className='align-self-start h5 m-0 mt-3'>Diferencia: <span className={color}>{percentage}%</span></p>
                             </Container>
                         </Container>
