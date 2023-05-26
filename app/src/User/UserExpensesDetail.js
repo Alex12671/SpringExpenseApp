@@ -207,9 +207,9 @@ class UserExpensesDetails extends Component {
                               width={"100%"}
                               height={"400px"}
                             />
-                        </div>
+                          </div>
                           <div className="w-50 d-flex flex-column align-items-center justify-content-center mt-4 bg-white rounded">
-                            <h3>Gasto total de {month} {this.state.date.substring(0,4)}</h3>
+                            <h3>Balance total de {month} {this.state.date.substring(0,4)}</h3>
                             <p className="display-4" >{totalExpense}€</p>
                           </div>
                         </div>
