@@ -1,2 +1,4 @@
-# Prueba de readme
-Solo me hace gracia ver como se ve esto xd
+- Instalar npm (npm install)
+- En el directorio app (cd app) iniciar npm (npm start)
+- Encender xampp, apache y sql
+- Instalar-se la extensión "Spring Boot Dashboard" y en la parte de apps iniciar el proyecto
