@@ -5,6 +5,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import '../App.css';
 import {Container,Input,Button,Label, FormGroup} from 'reactstrap';
 import {Link} from 'react-router-dom';
+import { ReactSession } from 'react-client-session';
+
+ReactSession.setStoreType("localStorage");
 
 class Category extends Component {
 
@@ -88,50 +91,65 @@ class Category extends Component {
         const body = await response.json();
         this.setState({Categories : body , isLoading: false});
     }
-
+    
     render() { 
+      if(ReactSession.get('role') === 'admin') {
         const title =<h3 class="text-center mt-4 mb-4">AÑADIR CATEGORIA</h3>;
-        const {isLoading} = this.state;
-        if(isLoading) 
-            return (<div>Cargando...</div>);
-        
-        return ( 
-            <div>
-                <AppNav/>
-                <Container>
-                  <div class="d-flex flex-column align-items-center justify-content-center">
-                      <form class="bg-white shadow rounded w-50 p-5" onSubmit={this.handleSubmit} >
-                      {title}
-                      <FormGroup>
-                          <Label for="description">Nombre</Label>
-                          <Input type="text" name="name" id="name" 
-                              onChange={this.handleChange} autoComplete="name" required/>
-                      </FormGroup>
-                      <div className="form-group files color">
-                            <label>Upload Your File </label>
-                            <input type="file" className="form-control" name="file" onChange={this.onFileChangeHandler}/>
-                        </div>
-                      <FormGroup>
-                          <Button color="primary" type="submit">Guardar</Button>{' '}
-                          <Link to="/adminHome/categories" class="btn btn-secondary">Cancel</Link>
-                      </FormGroup>
-                      
-                      </form>
-                  </div>
+      const {isLoading} = this.state;
+      if(isLoading) 
+          return (<div>Cargando...</div>);
+      
+      return ( 
+          <div>
+              <AppNav/>
+              <Container>
+                <div class="d-flex flex-column align-items-center justify-content-center">
+                    <form class="bg-white shadow rounded w-50 p-5" onSubmit={this.handleSubmit} >
+                    {title}
+                    <FormGroup>
+                        <Label for="description">Nombre</Label>
+                        <Input type="text" name="name" id="name" 
+                            onChange={this.handleChange} autoComplete="name" required/>
+                    </FormGroup>
+                    <div className="form-group files color">
+                          <label>Upload Your File </label>
+                          <input type="file" className="form-control" name="file" onChange={this.onFileChangeHandler}/>
+                      </div>
+                    <FormGroup>
+                        <Button color="primary" type="submit">Guardar</Button>{' '}
+                        <Link to="/adminHome/categories" class="btn btn-secondary">Cancel</Link>
+                    </FormGroup>
+                    
+                    </form>
+                </div>
+              </Container>
+          </div>
+              // <div>
+              //     <AppNav/>
+              //     <h2>Categories</h2>
+              //     {
+              //         Categories.map( category => 
+              //             <div id={category.id}>
+              //                 {category.name}
+              //             </div>
+              //         )
+              //     }
+              // </div>
+       );
+      }
+      return (
+        <div>
+        <Container>
+            <Container className="d-flex flex-column align-items-center justify-content-center">
+                <Container className="w-50 flex-column bg-white shadow rounded p-3">
+                    <p class="text-center fw-bold mt-2 h4">Debes estar validado para ver esta página!</p>
+                    <meta http-equiv="refresh" content="3; url=/"/>
                 </Container>
-            </div>
-                // <div>
-                //     <AppNav/>
-                //     <h2>Categories</h2>
-                //     {
-                //         Categories.map( category => 
-                //             <div id={category.id}>
-                //                 {category.name}
-                //             </div>
-                //         )
-                //     }
-                // </div>
-         );
+            </Container>
+        </Container>
+        </div>
+    );
+      
     }
 }
  

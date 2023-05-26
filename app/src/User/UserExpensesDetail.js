@@ -9,6 +9,8 @@ import { Table,Container,Button} from 'reactstrap';
 import Moment from 'react-moment';
 import UsersIcon from '../Img/usersIcon.png';
 import { Chart } from "react-google-charts";
+ReactSession.setStoreType("localStorage");
+
 class UserExpensesDetails extends Component {
     
     constructor(props){
@@ -123,7 +125,6 @@ class UserExpensesDetails extends Component {
         const title =<h3 class="text-center">Detalle cliente</h3>;
         const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
         const {GroupedExpenses,UserExpenses,isLoading} = this.state;
-        
 
         if (isLoading)
             return(<div>Cargando...</div>)
@@ -170,8 +171,8 @@ class UserExpensesDetails extends Component {
 
         let month = months[this.state.date.substring(6,7) - 1];
 
-
-        return (
+        if(ReactSession.get('role') === 'admin') {
+          return (
             <div>
                 <AppNav/>
                     <Container>
@@ -214,7 +215,21 @@ class UserExpensesDetails extends Component {
                         </div>
                     </Container>
             </div>
+          );
+        }
+        return (
+          <div>
+          <Container>
+              <Container className="d-flex flex-column align-items-center justify-content-center">
+                  <Container className="w-50 flex-column bg-white shadow rounded p-3">
+                      <p class="text-center fw-bold mt-2 h4">Debes estar validado para ver esta página!</p>
+                      <meta http-equiv="refresh" content="3; url=/"/>
+                  </Container>
+              </Container>
+          </Container>
+          </div>
         );
+        
     }
 }
  

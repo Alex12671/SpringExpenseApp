@@ -5,6 +5,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import '../App.css';
 import {Container,Button,Label} from 'reactstrap';
 import {Link} from 'react-router-dom';
+import { ReactSession } from 'react-client-session';
+
+ReactSession.setStoreType("localStorage");
 
 class ModifyCategory extends Component {
 
@@ -70,7 +73,8 @@ class ModifyCategory extends Component {
         this.setState({item : bodyExp, isLoading :false});
     }
 
-    render() { 
+    render() {
+      if(ReactSession.get('role') === 'admin') {
         const title =<h3 class="text-center mt-4 mb-4">MODIFICAR CATEGORIA</h3>;
         const {isLoading} =this.state;        
 
@@ -99,6 +103,20 @@ class ModifyCategory extends Component {
                 </Container>
         </div>
         );
+      }
+      return (
+        <div>
+        <Container>
+            <Container className="d-flex flex-column align-items-center justify-content-center">
+                <Container className="w-50 flex-column bg-white shadow rounded p-3">
+                    <p class="text-center fw-bold mt-2 h4">Debes estar validado para ver esta página!</p>
+                    <meta http-equiv="refresh" content="3; url=/"/>
+                </Container>
+            </Container>
+        </Container>
+        </div>
+      );
+        
     }
 }
  

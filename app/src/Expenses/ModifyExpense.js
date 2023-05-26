@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import '../App.css';
 import {Container,Button,Label} from 'reactstrap';
 import {Link} from 'react-router-dom';
+ReactSession.setStoreType("localStorage");
 
 class ModifyExpense extends Component {
 
@@ -163,7 +164,8 @@ class ModifyExpense extends Component {
 
           );
         }
-        return (
+        if(ReactSession.get('role') === 'user') {
+          return (
             <div>
                 <AppNav/>
                 <Container>
@@ -204,8 +206,21 @@ class ModifyExpense extends Component {
                       </form>
                   </div>
                 </Container>
-        </div>
+            </div>
 
+          );
+        }
+        return (
+          <div>
+          <Container>
+              <Container className="d-flex flex-column align-items-center justify-content-center">
+                  <Container className="w-50 flex-column bg-white shadow rounded p-3">
+                      <p class="text-center fw-bold mt-2 h4">Debes estar validado para ver esta página!</p>
+                      <meta http-equiv="refresh" content="3; url=/"/>
+                  </Container>
+              </Container>
+          </Container>
+          </div>
         );
     }
 }

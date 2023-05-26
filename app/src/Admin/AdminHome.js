@@ -3,9 +3,9 @@ import ExpensesIcon from '../Img/expensesIcon.png';
 import CategoriesIcon from '../Img/categoriesIcon.png';
 import UsersIcon from '../Img/usersIcon.png';
 import {Link } from 'react-router-dom';
-import { ReactSession } from 'react-client-session';
 import AppNav from '../AppNav';
 import {Container,Button,} from 'reactstrap';
+import { ReactSession } from 'react-client-session';
 
 ReactSession.setStoreType("localStorage");
 

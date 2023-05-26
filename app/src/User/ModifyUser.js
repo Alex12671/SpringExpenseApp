@@ -4,6 +4,9 @@ import Swal from 'sweetalert2';
 import '../App.css';
 import {Container,Button,Label} from 'reactstrap';
 import {Link} from 'react-router-dom';
+import { ReactSession } from 'react-client-session';
+
+ReactSession.setStoreType("localStorage");
 
 class ModifyUser extends Component {
 
@@ -80,7 +83,8 @@ class ModifyUser extends Component {
         if (isLoading)
             return(<div>Cargando...</div>)
 
-        return (
+        if(ReactSession.get('role') === 'admin') {
+          return (
             <div>
                 <AppNav/>
                 <Container>
@@ -118,9 +122,23 @@ class ModifyUser extends Component {
                       </form>
                   </div>
                 </Container>
-        </div>
+            </div>
 
+          );
+        }
+        return (
+          <div>
+          <Container>
+              <Container className="d-flex flex-column align-items-center justify-content-center">
+                  <Container className="w-50 flex-column bg-white shadow rounded p-3">
+                      <p class="text-center fw-bold mt-2 h4">Debes estar validado para ver esta página!</p>
+                      <meta http-equiv="refresh" content="3; url=/"/>
+                  </Container>
+              </Container>
+          </Container>
+          </div>
         );
+        
     }
 }
  

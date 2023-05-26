@@ -7,6 +7,8 @@ import '../App.css';
 import {Container,Input,Button,Label, FormGroup} from 'reactstrap';
 import {Link} from 'react-router-dom';
 
+ReactSession.setStoreType("localStorage");
+
 class Expenses extends Component {
  
     emptyItem = {
@@ -128,6 +130,7 @@ class Expenses extends Component {
     }
 
     render() { 
+      if(ReactSession.get('role') === 'user') {
         const title =<h3 class="text-center mt-4 mb-4">AÑADIR GASTO</h3>;
         const {Categories, isLoading} =this.state;        
 
@@ -185,6 +188,19 @@ class Expenses extends Component {
         </div>
 
         );
+      }
+      return (
+        <div>
+        <Container>
+            <Container className="d-flex flex-column align-items-center justify-content-center">
+                <Container className="w-50 flex-column bg-white shadow rounded p-3">
+                    <p class="text-center fw-bold mt-2 h4">Debes estar validado para ver esta página!</p>
+                    <meta http-equiv="refresh" content="3; url=/"/>
+                </Container>
+            </Container>
+        </Container>
+        </div>
+      );
     }
 }
  

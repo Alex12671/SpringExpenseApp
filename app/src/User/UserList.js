@@ -6,6 +6,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import '../App.css';
 import { Table,Container,Button} from 'reactstrap';
 import casa from '../Img/casa.png';
+import { ReactSession } from 'react-client-session';
+
+ReactSession.setStoreType("localStorage");
 
 class UserList extends Component {
 
@@ -92,8 +95,8 @@ class UserList extends Component {
 
             )
         
-
-        return (
+        if(ReactSession.get('role') === 'admin') {
+          return (
             <div>
                 <AppNav/>
                     <Container>
@@ -119,7 +122,21 @@ class UserList extends Component {
                         </div>
                     </Container>
             </div>
+          );
+        }
+        return (
+          <div>
+          <Container>
+              <Container className="d-flex flex-column align-items-center justify-content-center">
+                  <Container className="w-50 flex-column bg-white shadow rounded p-3">
+                      <p class="text-center fw-bold mt-2 h4">Debes estar validado para ver esta página!</p>
+                      <meta http-equiv="refresh" content="3; url=/"/>
+                  </Container>
+              </Container>
+          </Container>
+          </div>
         );
+        
     }
 }
  

@@ -12,6 +12,8 @@ import DeleteIcon from '../Img/deleteIcon.png';
 import EditIcon from '../Img/editIcon.png';
 import { Chart } from "react-google-charts";
 
+ReactSession.setStoreType("localStorage");
+
 class UserExpenses extends Component {
     constructor(props){
       super(props)
@@ -150,7 +152,8 @@ class UserExpenses extends Component {
     }
 
 
-    render() { 
+    render() {
+      if(ReactSession.get('role') === 'user') {
         const title =<h2 class="text-center">BALANCE</h2>;
         const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
         const {GroupedExpenses,UserExpenses,isLoading} = this.state;
@@ -267,6 +270,19 @@ class UserExpenses extends Component {
                     </Container>
             </div>
         );
+      }
+      return (
+        <div>
+        <Container>
+            <Container className="d-flex flex-column align-items-center justify-content-center">
+                <Container className="w-50 flex-column bg-white shadow rounded p-3">
+                    <p class="text-center fw-bold mt-2 h4">Debes estar validado para ver esta página!</p>
+                    <meta http-equiv="refresh" content="3; url=/"/>
+                </Container>
+            </Container>
+        </Container>
+        </div>
+      );
     }
 }
  
