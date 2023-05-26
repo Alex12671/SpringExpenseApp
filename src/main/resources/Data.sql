@@ -1,6 +1,6 @@
 
-insert into user values (1, 'Codeengine11@gmail.com', 'Siamak', '12345','user')
-insert into user values (2, 'John@john.com', 'John', '54321', 'user')
+insert into user values (1, 'julian@gmail.com', 'Julian', '12345','user')
+insert into user values (2, 'Luís@Luís.com', 'John', '54321', 'user')
 insert into user values (3, 'adam@adam.com', 'Adam', 'admin', 'admin')
 
 

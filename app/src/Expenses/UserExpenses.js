@@ -7,7 +7,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import '../App.css';
 import { Table,Container,Button} from 'reactstrap';
 import Moment from 'react-moment';
-import casa from '../Img/casa.png';
 import DeleteIcon from '../Img/deleteIcon.png';
 import EditIcon from '../Img/editIcon.png';
 import { Chart } from "react-google-charts";

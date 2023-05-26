@@ -57,7 +57,7 @@ class UserHome extends Component {
                 percentage = ((Math.abs(this.state.TotalExpensesPrice) / Math.abs(this.state.LastMonthExpenses)) * 100).toFixed(2);
                 color      = 'text-success';
             }
-            else {
+            else{
                 percentage = ((Math.abs(this.state.LastMonthExpenses) / Math.abs(this.state.TotalExpensesPrice)) * 100).toFixed(2);
                 color      = 'text-danger';
             }
@@ -65,6 +65,7 @@ class UserHome extends Component {
                 percentage  = 0;
                 color       = 'text-danger';
             }
+
 
             return (
                 <div>
@@ -78,13 +79,18 @@ class UserHome extends Component {
                             </Container>
                         </Container>
                         <Container className="w-50 flex-column bg-white shadow rounded p-3">
+<<<<<<< Updated upstream
                             <h4 className="text-center">Balance totales este mes</h4>
+=======
+                            <h4 className="text-center">Balance de este mes</h4>
+>>>>>>> Stashed changes
                             <Container className="d-flex flex-column align-items-center justify-content-center">
                                 <p className='display-4'>{Math.abs(this.state.TotalExpensesPrice)}€</p>
                                 <p className='align-self-start h5 m-0 mt-3'>Balance del mes pasado: {Math.abs(this.state.LastMonthExpenses)}€</p>
                                 <p className='align-self-start h5 m-0 mt-3'>Diferencia: <span className={color}>{percentage}%</span></p>
                             </Container>
                         </Container>
+                        
                     </Container>
                 </Container>
                 </div>

@@ -1,5 +1,6 @@
 {
   "name": "app",
+  "homepage": "http://www.expensesapp.com.mialias.net/SpringExpenseApp-main",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
