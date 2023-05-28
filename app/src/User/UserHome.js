@@ -79,11 +79,7 @@ class UserHome extends Component {
                             </Container>
                         </Container>
                         <Container className="w-50 flex-column bg-white shadow rounded p-3">
-<<<<<<< Updated upstream
-                            <h4 className="text-center">Balance totales este mes</h4>
-=======
                             <h4 className="text-center">Balance de este mes</h4>
->>>>>>> Stashed changes
                             <Container className="d-flex flex-column align-items-center justify-content-center">
                                 <p className='display-4'>{Math.abs(this.state.TotalExpensesPrice)}€</p>
                                 <p className='align-self-start h5 m-0 mt-3'>Balance del mes pasado: {Math.abs(this.state.LastMonthExpenses)}€</p>
